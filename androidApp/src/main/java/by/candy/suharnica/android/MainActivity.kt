@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val tv: TextView = findViewById(R.id.text_view)
-
+        
         runBlocking {
             Log.e("main","start")
             val a = FirebaseCatalogRepo().fetchStatusDetail()
