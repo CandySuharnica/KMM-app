@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -17,7 +18,13 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting{
+            dependencies {
+                implementation(libs.firebase.realtime)
+                implementation(libs.coroutines)
+                implementation(libs.kotlinx.serialization.core)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
