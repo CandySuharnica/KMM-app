@@ -1,0 +1,43 @@
+CREATE TABLE CatalogItem (
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lable TEXT,
+    type TEXT,
+    weight INTEGER AS Int,
+    imgUrl TEXT,
+    price REAL,
+    priceSale REAL,
+    likes INTEGER AS Int,
+    about TEXT,
+    productComposition TEXT,
+    nutritionalValue TEXT
+);
+
+getAll:
+SELECT * FROM CatalogItem;
+
+
+--@Query("SELECT * FROM catalog")
+ --   fun getAll(): List<CatalogItemDbEntity>
+
+
+
+ --   @Query("DELETE FROM catalog")
+   -- fun deleteTable()
+
+--    @Query("SELECT * FROM catalog WHERE type LIKE :type AND name LIKE :query")
+  --  fun getFromTypeAndSearch(type:String,query: String) : List<CatalogItemDbEntity>
+
+    --@Query("SELECT weight FROM catalog WHERE id = :id")
+    --fun getWeightFRomId(id: Int) : Int
+
+    --@Query("SELECT price FROM catalog WHERE id = :id")
+    --fun getPriceFRomId(id: Int) : Int
+
+    --@Insert
+    ---fun insert(item: CatalogItemDbEntity)
+
+    --@Up-date
+    --fun update(item: CatalogItemDbEntity)
+
+    --@Delete
+    --fun delete(item: CatalogItemDbEntity)-->
