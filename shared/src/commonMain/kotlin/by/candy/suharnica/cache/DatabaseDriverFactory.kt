@@ -1,4 +1,4 @@
-package by.candy.suharnica.core.dataSource.database
+package by.candy.suharnica.cache
 
 import com.squareup.sqldelight.db.SqlDriver
 
