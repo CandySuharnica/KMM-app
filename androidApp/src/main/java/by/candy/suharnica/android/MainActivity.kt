@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import by.candy.suharnica.Greeting
 import android.widget.TextView
-import by.candy.suharnica.core.dataSource.network.CatalogLoader
+import by.candy.suharnica.network.CandySuharnicaAPI
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val tv: TextView = findViewById(R.id.text_view)
         MainScope().launch {
             kotlin.runCatching {
-                CatalogLoader().getHtml()
+                CandySuharnicaAPI().getAllLaunches()
             }.onSuccess {
                 tv.text = it.toString()
             }.onFailure {

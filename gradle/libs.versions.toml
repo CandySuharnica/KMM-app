@@ -58,11 +58,6 @@ livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref =
 
 coil = { module = "io.coil-kt:coil", version.ref = "coil-version" }
 
-room = { module = "androidx.room:room-ktx", version.ref = "room-version" }
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
-room-common = { module = "androidx.room:room-common", version.ref = "room-version" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
-
 core = { module = "androidx.core:core-ktx", version.ref = "core-version" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat-version" }
 material = { module = "com.google.android.material:material", version.ref = "material-version" }
@@ -84,7 +79,9 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version" 
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-version" }
-ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-version" }
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
+ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
+ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
 ktor-android = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor-version" }
 ktor-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor-version" }
 

@@ -25,12 +25,14 @@ kotlin {
                 implementation(libs.ktor.core)
                 implementation(libs.ktor.logging)
                 implementation(libs.ktor.serialization)
+                implementation(libs.ktor.content.negotiation)
+                implementation(libs.ktor.cio)
                 //Coroutines
                 implementation(libs.coroutines)
                 //Logger
                 implementation(libs.napier)
                 //JSON
-                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.serialization.core)
                 // DI
                 api(libs.koin.core)
                 //database
