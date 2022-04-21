@@ -1,25 +1,31 @@
+import kotlin.collections.List;
+
+
 CREATE TABLE CatalogItem (
-    id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,
-    lable TEXT,
-    type TEXT,
-    weight INTEGER AS Int,
-    imgUrl TEXT,
-    price REAL,
-    priceSale REAL,
-    likes INTEGER AS Int,
-    about TEXT,
-    productComposition TEXT,
-    nutritionalValue TEXT
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY,
+    label TEXT NOT NULL,
+    type TEXT NOT NULL,
+    weight INTEGER AS Int NOT NULL,
+    imgUrl TEXT AS List<String> NOT NULL,
+    price REAL NOT NULL,
+    priceSale REAL NOT NULL,
+    likes INTEGER AS Int NOT NULL,
+    about TEXT NOT NULL,
+    productComposition TEXT AS List<String> NOT NULL,
+    nutritionalValue TEXT AS List<String> NOT NULL
 );
 
 getAll:
 SELECT * FROM CatalogItem;
 
+removeAllItems:
+DELETE FROM CatalogItem;
 
+insertItem:
+INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,nutritionalValue)
+VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:nutritionalValue);
 --@Query("SELECT * FROM catalog")
  --   fun getAll(): List<CatalogItemDbEntity>
-
-
 
  --   @Query("DELETE FROM catalog")
    -- fun deleteTable()

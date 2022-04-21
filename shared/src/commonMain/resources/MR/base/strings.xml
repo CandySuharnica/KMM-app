@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <!-- image description -->
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="profile">Profile</string>
+    <string name="basket">Basket</string>
+    <string name="edit">Edit</string>
+    <string name="smile">Like</string>
+    <string name="catalog">Catalog</string>
+
+
+</resources>

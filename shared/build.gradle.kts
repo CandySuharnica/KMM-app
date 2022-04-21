@@ -3,9 +3,15 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
     kotlin("plugin.serialization")
+    id("dev.icerock.mobile.multiplatform-resources")
+}
+
+dependencies{
+    commonMainApi(libs.moko.resources.common)
 }
 
 kotlin {
+
     android()
     
     listOf(
@@ -38,6 +44,8 @@ kotlin {
                 //database
                 implementation(libs.sqlDelight.common)
                 implementation(libs.sqlDelight.coroutines)
+                //resources
+                //api(libs.moko.resources.main)
             }
         }
         /*val commonTest by getting {
@@ -51,6 +59,8 @@ kotlin {
                 implementation(libs.sqlDelight.android)
                 //Network
                 implementation(libs.ktor.android)
+                //resources
+                //api(libs.moko.resources.android)
             }
         }
        // val androidTest by getting
@@ -88,6 +98,10 @@ android {
         minSdk = 24
         targetSdk = 32
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "by.candy.suharnica" // required
 }
 
 sqldelight {

@@ -4,6 +4,15 @@ plugins {
 }
 
 android {
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
+    }
+
     compileSdk = 32
     defaultConfig {
         applicationId = "by.candy.suharnica.android"
@@ -21,9 +30,15 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation(libs.material)
     implementation(libs.appcompat)
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation(libs.coroutines)
     implementation(libs.coroutines.android)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.navigation)
+    implementation(libs.compose.material)
+    //implementation(libs.compose.tooling)
+    implementation("androidx.compose.ui:ui:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
 }
