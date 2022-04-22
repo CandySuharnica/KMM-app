@@ -83,7 +83,7 @@ compose-compiler = {module = "androidx.compose.compiler:compiler", version.ref =
 compose-ui = {module = "androidx.compose.ui:ui", version.ref = "compose-version"}
 compose-foundation = {module = "androidx.compose.foundation:foundation", version.ref = "compose-version"}
 compose-activity = {module = "androidx.activity:activity-compose", version.ref = "compose-activity-version"}
-compose-tooling = {module = "androidx.compose.ui:ui-tooling", version.ref = "compose-activity-version"}
+compose-tooling = {module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-activity-version"}
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version" }
 

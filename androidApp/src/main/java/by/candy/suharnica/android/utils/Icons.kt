@@ -45,5 +45,10 @@ sealed class Icons(
         R.drawable.ic_smile
     )
 
+    object Plus : Icons(
+        MR.strings.plus,
+        R.drawable.ic_plus
+    )
+
 }
 
