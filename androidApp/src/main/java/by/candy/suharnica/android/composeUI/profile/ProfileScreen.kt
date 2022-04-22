@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import by.candy.suharnica.MR
 import by.candy.suharnica.android.utils.Icons
 
 
@@ -55,7 +56,7 @@ fun topCard(){
                 )
             Column(modifier = Modifier
                 .weight(3f)) {
-                Text(text = stringResource(id = R.string.full_name_profile_example),
+                Text(text = stringResource(id = MR.strings.full_name.resourceId),
                     //fontFamily = GolosFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp

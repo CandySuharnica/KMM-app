@@ -10,4 +10,7 @@
     <string name="catalog">Каталог</string>
     <string name="plus">Плюс</string>
 
+    <!-- profile screen -->
+    <string name="full_name">Введите полное имя</string>
+
 </resources>
