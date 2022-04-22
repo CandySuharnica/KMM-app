@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import by.candy.suharnica.CandySDK
+import by.candy.suharnica.android.composeUI.MainScreen
 import by.candy.suharnica.cache.DatabaseDriverFactory
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-
+            MainScreen()
         }
         /*MainScope().launch {
             kotlin.runCatching {

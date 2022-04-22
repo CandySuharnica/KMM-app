@@ -20,14 +20,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import by.candy.suharnica.android.utils.Icons
+import by.candy.suharnica.android.utils.NavGraph
 
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        Icons.Catalog,
-        Icons.Basket,
-        Icons.Profile
+        NavGraph.Catalog,
+        NavGraph.Basket,
+        NavGraph.Profile
     )
     BottomNavigation(
         backgroundColor = Color.White,
@@ -42,12 +43,12 @@ fun BottomNavigationBar(navController: NavController) {
                 unselectedContentColor = Color.Black.copy(0.4f),
                 selected = true,
 
-                icon = { Icon( //modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = item.image),
-                    contentDescription = stringResource(id = item.description.resourceId)) },
+                icon = { Icon(
+                    painter = painterResource(id = item.icon.image),
+                    contentDescription = stringResource(id = item.icon.description.resourceId)) },
 
                 onClick = {
-                    /*navController.navigate(item.description.resourceId) {
+                    navController.navigate(item.route) {
                         // Pop up to the start destination of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items
@@ -61,7 +62,7 @@ fun BottomNavigationBar(navController: NavController) {
                         launchSingleTop = true
                         // Restore state when reselecting a previously selected item
                         restoreState = true
-                    }*/
+                    }
                 }
             )
         }
@@ -126,14 +127,14 @@ fun ProfileScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = "Icons.Catalog.name") {
-        composable("Icons.Catalog.name") {
+    NavHost(navController, startDestination = NavGraph.Catalog.route) {
+        composable(NavGraph.Catalog.route) {
             CatalogScreen()
         }
-        composable("Icons.Basket.name") {
+        composable(NavGraph.Basket.route) {
             BasketScreen()
         }
-        composable("NavItems.Profile.name") {
+        composable(NavGraph.Profile.route) {
             ProfileScreen()
         }
     }
@@ -142,7 +143,7 @@ fun Navigation(navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreen2() {
+fun MainScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }

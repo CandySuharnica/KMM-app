@@ -8,6 +8,9 @@
     <string name="edit">Редактировать</string>
     <string name="smile">Нравится</string>
     <string name="catalog">Каталог</string>
+    <string name="plus">Плюс</string>
 
+    <!-- profile screen -->
+    <string name="full_name">Введите полное имя</string>
 
 </resources>

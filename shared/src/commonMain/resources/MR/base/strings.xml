@@ -8,6 +8,9 @@
     <string name="edit">Edit</string>
     <string name="smile">Like</string>
     <string name="catalog">Catalog</string>
+    <string name="plus">Plus</string>
 
+    <!-- profile screen -->
+    <string name="full_name">Enter full name</string>
 
 </resources>

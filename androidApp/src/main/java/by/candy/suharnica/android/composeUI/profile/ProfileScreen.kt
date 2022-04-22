@@ -1,5 +1,4 @@
-/*
-package com.zakdroid.candysuharnica.screens.composeUI.profile
+package by.candy.suharnica.android.composeUI.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.zakdroid.candysuharnica.screens.composeUI.FontGolos.GolosFontFamily
+import by.candy.suharnica.MR
+import by.candy.suharnica.android.utils.Icons
+
 
 @Composable
 fun Profile(){
@@ -55,18 +56,18 @@ fun topCard(){
                 )
             Column(modifier = Modifier
                 .weight(3f)) {
-                Text(text = stringResource(id = R.string.full_name_profile_example),
-                    fontFamily = GolosFontFamily,
+                Text(text = stringResource(id = MR.strings.full_name.resourceId),
+                    //fontFamily = GolosFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp
                 )
                 Text(text = stringResource(id = R.string.phone_number_profile_example),
-                    fontFamily = GolosFontFamily,
+                    //fontFamily = GolosFontFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
                 )
                 Text(text = stringResource(id = R.string.address_profile_example),
-                    fontFamily = GolosFontFamily,
+                    //fontFamily = GolosFontFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
                 )
@@ -95,11 +96,11 @@ fun someInfo(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
             Text(text = stringResource(id = R.string.bank_card_number_profile),
-                fontFamily = GolosFontFamily,
+                //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp)
             Text(text = stringResource(id = R.string.amount_example_xx),
-                fontFamily = GolosFontFamily,
+                //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp)
             IconButton(
@@ -126,21 +127,21 @@ fun myOrders(){
                 .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(painter = painterResource(Icons.SmallBasket.image),
+            Icon(painter = painterResource(Icons.Basket.image),
                 contentDescription = "small basket icon",
                 modifier = Modifier.weight(1f))
             Text(text = stringResource(id = R.string.my_orders_profile),
-                fontFamily = GolosFontFamily,
+                //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 modifier = Modifier.weight(4f))
             Text(text = stringResource(id = R.string.delivery_text),
-                fontFamily = GolosFontFamily,
+                //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 modifier = Modifier.weight(4f))
             Text(text = stringResource(id = R.string.delivery_time),
-                fontFamily = GolosFontFamily,
+                //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 modifier = Modifier.weight(2f))
@@ -149,8 +150,8 @@ fun myOrders(){
                 modifier = Modifier.weight(1f)
             ) {
                 Icon(
-                    painter = painterResource(Icons.SmallPlus.image),
-                    contentDescription = "plus icon")
+                    painter = painterResource(Icons.Plus.image),
+                    contentDescription = stringResource(id = Icons.Plus.description.resourceId))
             }
         }
         LazyColumn{
@@ -166,12 +167,12 @@ fun myFavorites() {
             contentDescription = "smile icon",
             modifier = Modifier.weight(1f))
         Text(text = stringResource(id = R.string.favorites_desserts),
-            fontFamily = GolosFontFamily,
+            //fontFamily = GolosFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             modifier = Modifier.weight(4f))
         Text(text = stringResource(id = R.string.amount_example_xx),
-            fontFamily = GolosFontFamily,
+            //fontFamily = GolosFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             modifier = Modifier.weight(1f))
@@ -187,4 +188,4 @@ fun ourBakeries(){
 @Composable
 fun PreviewProfile(){
     Profile()
-}*/
+}
