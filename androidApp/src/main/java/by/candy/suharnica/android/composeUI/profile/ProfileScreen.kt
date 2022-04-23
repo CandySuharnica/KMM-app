@@ -1,3 +1,4 @@
+/*
 package by.candy.suharnica.android.composeUI.profile
 
 import androidx.compose.foundation.Image
@@ -189,3 +190,4 @@ fun ourBakeries(){
 fun PreviewProfile(){
     Profile()
 }
+*/

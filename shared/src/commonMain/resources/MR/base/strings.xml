@@ -9,12 +9,20 @@
     <string name="smile">Like</string>
     <string name="catalog">Catalog</string>
     <string name="plus">Plus</string>
+    <string name="minus">Minus</string>
+    <string name="arrow_back">Arrow Back</string>
+    <string name="share">Share</string>
 
     <!-- profile screen -->
     <string name="full_name">Enter full name</string>
 
     <!-- catalog screen -->
     <string name="price">Price</string>
+
+    <!-- detail screen -->
+    <string name="composition">Composition:</string>
+    <string name="nutrition_facts">Nutrition Facts(100g):</string>
+    <string name="add_to_basket">Add to Basket</string>
 
 
 </resources>

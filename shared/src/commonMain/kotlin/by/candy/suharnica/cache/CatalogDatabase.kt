@@ -64,6 +64,8 @@ class CatalogDatabase(databaseDriverFactory: DatabaseDriverFactory) {
         return dbQuery.getAll(::mapCatalog).asFlow().mapToList()
     }
 
+    internal fun getItemFromId(id: Long) = dbQuery.getItemFromId(id).executeAsOne()
+
     private fun mapCatalog(
         id: Long,
         label: String,

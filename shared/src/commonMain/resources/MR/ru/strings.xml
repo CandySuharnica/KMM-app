@@ -9,11 +9,20 @@
     <string name="smile">Нравится</string>
     <string name="catalog">Каталог</string>
     <string name="plus">Плюс</string>
+    <string name="minus">Минус</string>
+    <string name="arrow_back">Стрелка назад</string>
+    <string name="share">Поделиться</string>
 
     <!-- profile screen -->
     <string name="full_name">Введите полное имя</string>
 
     <!-- catalog screen -->
     <string name="price">Цена</string>
+
+    <!-- detail screen -->
+    <string name="composition">Состав:</string>
+    <string name="nutrition_facts">Пищевая ценность(100г):</string>
+    <string name="add_to_basket">Добавить в корзину</string>
+
 
 </resources>

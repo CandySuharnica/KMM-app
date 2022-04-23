@@ -11,6 +11,8 @@ class MainViewModel(
 
     val catalogList = candySdk.getCatalogList()
 
+    fun getItemFromId(id:Long) = candySdk.getItemFromId(id)
+
     class Factory(private val candySdk: CandySDK) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return MainViewModel(candySdk) as T
