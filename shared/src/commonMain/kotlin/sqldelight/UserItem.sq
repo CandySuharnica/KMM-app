@@ -1,0 +1,24 @@
+import kotlin.collections.List;
+
+CREATE TABLE UserItem (
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY,
+    uid INTEGER UNIQUE,
+    url_avatar TEXT,
+    first_name TEXT NOT NULL,
+    second_name TEXT,
+    mobile_number TEXT,
+    address TEXT,
+    item_likes TEXT AS List<String> NOT NULL
+);
+
+getUserFromId:
+SELECT * FROM UserItem
+WHERE id = :id;
+
+getUserFromUId:
+SELECT * FROM UserItem
+WHERE uid = :uid;
+
+insertUser:
+INSERT OR REPLACE INTO UserItem(id, uid, url_avatar, first_name, second_name, mobile_number,address, item_likes)
+VALUES (:id,:uid,:url_avatar,:first_name, :second_name, :mobile_number, :address, :item_likes);
