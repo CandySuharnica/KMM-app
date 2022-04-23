@@ -45,9 +45,34 @@ sealed class Icons(
         R.drawable.ic_smile
     )
 
+    object BigSmile : Icons(
+        MR.strings.smile,
+        R.drawable.ic_big_smile
+    )
+
     object Plus : Icons(
         MR.strings.plus,
         R.drawable.ic_plus
+    )
+
+    object BigPlus : Icons(
+        MR.strings.plus,
+        R.drawable.ic_big_plus
+    )
+
+    object ArrowBack : Icons(
+        MR.strings.arrow_back,
+        R.drawable.ic_arrow_back
+    )
+
+    object Share : Icons(
+        MR.strings.share,
+        R.drawable.ic_share
+    )
+
+    object Minus : Icons(
+        MR.strings.minus,
+        R.drawable.ic_minus
     )
 
 }

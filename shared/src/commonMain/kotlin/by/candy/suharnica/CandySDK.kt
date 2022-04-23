@@ -12,18 +12,25 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
 
     @Throws(Exception::class)
     fun getCatalogList(): Flow<List<CatalogItem>> {
-        val cachedLaunches = database.getAllLaunches()
+
         return flow{
-            emit(cachedLaunches.first())
+            val cachedLaunches = database.getAllLaunches().first()
+            //emit(cachedLaunches.first())
+
             val catalogItems = api.getAllLaunches()
 
-            cachedLaunches.onEmpty {
-                   // database.clearDatabase()
-                    database.fillDB(items = catalogItems)
+            if (cachedLaunches.isEmpty()){
+                database.fillDB(items = catalogItems)
             }
+            /*cachedLaunches.onEmpty {
+                   // database.clearDatabase()
+
+            }*/
             emit(catalogItems)
          }
 
     }
+
+    fun getItemFromId(id:Long) = database.getItemFromId(id)
 
 }

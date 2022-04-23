@@ -79,7 +79,7 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
         }
         .padding(2.dp)
         .clickable ( onClick = {
-            navController.navigate(NavGraph.DetailScreen.route)
+            navController.navigate("${NavGraph.DetailScreen.route}/itemId=${item.id}")
         } )
     ) {
         Column() {

@@ -18,12 +18,17 @@ CREATE TABLE CatalogItem (
 getAll:
 SELECT * FROM CatalogItem;
 
+getItemFromId:
+SELECT * FROM CatalogItem
+WHERE id = :id;
+
 removeAllItems:
 DELETE FROM CatalogItem;
 
 insertItem:
 INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,nutritionalValue)
 VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:nutritionalValue);
+
 --@Query("SELECT * FROM catalog")
  --   fun getAll(): List<CatalogItemDbEntity>
 
