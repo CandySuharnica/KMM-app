@@ -4,7 +4,7 @@ import by.candy.suharnica.MR
 import by.candy.suharnica.android.R
 
 sealed class NavGraph(
-    val icon: Icons,
+    val icon: Icons?,
     val route: String) {
 
     object Catalog : NavGraph(
@@ -20,6 +20,11 @@ sealed class NavGraph(
     object Profile : NavGraph(
         Icons.Profile,
         "profile"
+    )
+
+    object DetailScreen : NavGraph(
+        null,
+        "detail"
     )
 
 }

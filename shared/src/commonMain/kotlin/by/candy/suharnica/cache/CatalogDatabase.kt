@@ -3,7 +3,11 @@ package by.candy.suharnica.cache
 import by.candy.suharnica.core.dataSource.database.CandyDatabase
 import by.candy.suharnica.entity.CatalogItem
 import com.squareup.sqldelight.ColumnAdapter
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 
 class CatalogDatabase(databaseDriverFactory: DatabaseDriverFactory) {
@@ -56,8 +60,8 @@ class CatalogDatabase(databaseDriverFactory: DatabaseDriverFactory) {
         }
     }
 
-    internal fun getAllLaunches(): List<CatalogItem> {
-        return dbQuery.getAll(::mapCatalog).executeAsList()
+    internal fun getAllLaunches(): Flow<List<CatalogItem>> {
+        return dbQuery.getAll(::mapCatalog).asFlow().mapToList()
     }
 
     private fun mapCatalog(

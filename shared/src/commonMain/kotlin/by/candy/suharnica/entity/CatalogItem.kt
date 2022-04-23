@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CatalogItem(
     val id: Int = 0,
+    @SerialName("name")
     val label: String = "",
     val type: String = "", //for filter in the groups
     val weight: Int = 0,

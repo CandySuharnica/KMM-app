@@ -3,6 +3,7 @@ package by.candy.suharnica.android.composeUI
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
 
@@ -44,7 +46,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = true,
 
                 icon = { Icon(
-                    painter = painterResource(id = item.icon.image),
+                    painter = painterResource(id = item.icon!!.image),
                     contentDescription = stringResource(id = item.icon.description.resourceId)) },
 
                 onClick = {
@@ -69,23 +71,6 @@ fun BottomNavigationBar(navController: NavController) {
     }
 }
 
-@Composable
-fun CatalogScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        SearchBar()
-        Text(
-            text = "Catalog",
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier.fillMaxSize(),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
-    }
-}
 
 @Composable
 fun BasketScreen() {
@@ -126,10 +111,10 @@ fun ProfileScreen() {
 }
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(navController: NavHostController,viewModel: MainViewModel) {
     NavHost(navController, startDestination = NavGraph.Catalog.route) {
         composable(NavGraph.Catalog.route) {
-            CatalogScreen()
+            CatalogScreen(viewModel,navController)
         }
         composable(NavGraph.Basket.route) {
             BasketScreen()
@@ -137,17 +122,20 @@ fun Navigation(navController: NavHostController) {
         composable(NavGraph.Profile.route) {
             ProfileScreen()
         }
+        composable(NavGraph.DetailScreen.route) {
+            DetailScreen()
+        }
     }
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: MainViewModel) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }
     ) {
-        Navigation(navController)
+        Navigation(navController,viewModel)
     }
 }

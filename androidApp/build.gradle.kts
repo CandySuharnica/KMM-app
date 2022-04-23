@@ -40,4 +40,5 @@ dependencies {
     implementation(libs.compose.material)
     implementation("androidx.compose.ui:ui:1.1.1")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
+    implementation(libs.coil)
 }

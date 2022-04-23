@@ -13,4 +13,8 @@
     <!-- profile screen -->
     <string name="full_name">Enter full name</string>
 
+    <!-- catalog screen -->
+    <string name="price">Price</string>
+
+
 </resources>
