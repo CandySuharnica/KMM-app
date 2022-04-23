@@ -1,0 +1,25 @@
+CREATE TABLE BasketItem (
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY,
+    itemId INTEGER UNIQUE NOT NULL,
+    count INTEGER NOT NULL
+);
+
+getBasket:
+SELECT * FROM BasketItem;
+
+getItemFromId:
+SELECT * FROM BasketItem
+WHERE id = :id;
+
+updateItem:
+UPDATE BasketItem
+SET count = :count
+WHERE itemId = :itemId;
+
+removeItem:
+DELETE FROM BasketItem
+WHERE itemId = :itemId;
+
+insertItem:
+INSERT INTO BasketItem(itemId,count)
+VALUES (:itemId,:count);
