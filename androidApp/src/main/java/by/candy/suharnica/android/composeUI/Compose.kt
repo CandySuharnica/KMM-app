@@ -80,26 +80,9 @@ fun BottomNavigationBar(navController: NavController) {
 }
 
 
-@Composable
-fun BasketScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        SearchBar()
-        Text(
-            text = "Basket",
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier.fillMaxSize(),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
-    }
-}
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen1() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -125,10 +108,10 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             CatalogScreen(viewModel, navController)
         }
         composable(NavGraph.Basket.route) {
-            BasketScreen()
+            BasketScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
-            ProfileScreen()
+            ProfileScreen1()
         }
         composable(
             "${NavGraph.DetailScreen.route}/itemId={itemId}",
