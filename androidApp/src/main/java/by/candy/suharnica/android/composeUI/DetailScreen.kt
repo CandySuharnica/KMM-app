@@ -3,6 +3,7 @@ package by.candy.suharnica.android.composeUI
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -179,7 +180,8 @@ fun DetailScreen(viewModel: MainViewModel, itemId: Long) {
                 Icon(
                     modifier = Modifier
                         .padding(end = 8.dp)
-                        .align(Alignment.CenterEnd),
+                        .align(Alignment.CenterEnd)
+                        .clickable { viewModel.addItemIntoBasket(itemId) },
                     painter = painterResource(id = Icons.BigPlus.image),
                     contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
                 )

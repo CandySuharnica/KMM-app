@@ -1,5 +1,6 @@
-package by.candy.suharnica.cache
+package by.candy.suharnica.cache.databases
 
+import by.candy.suharnica.cache.DatabaseDriverFactory
 import by.candy.suharnica.core.dataSource.database.CandyDatabase
 import by.candy.suharnica.entity.CatalogItem
 import com.squareup.sqldelight.ColumnAdapter
@@ -7,30 +8,9 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 
-class CatalogDatabase(databaseDriverFactory: DatabaseDriverFactory) {
-
-    private val listOfStringsAdapter = object : ColumnAdapter<List<String>, String> {
-        override fun decode(databaseValue: String) =
-            if (databaseValue.isEmpty()) {
-                listOf()
-            } else {
-                databaseValue.split("!!")
-            }
-
-        override fun encode(value: List<String>) = value.joinToString(separator = "!!")
-    }
-
-    private val database = CandyDatabase(
-        driver = databaseDriverFactory.createDriver(),
-        CatalogItemAdapter = sqldelight.CatalogItem.Adapter(
-            imgUrlAdapter = listOfStringsAdapter,
-            productCompositionAdapter = listOfStringsAdapter,
-            nutritionalValueAdapter = listOfStringsAdapter
-        )
-    )
+class CatalogDatabase(database: CandyDatabase) {
 
     private val dbQuery = database.catalogItemQueries
 

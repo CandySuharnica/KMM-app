@@ -1,15 +1,13 @@
 CREATE TABLE BasketItem (
     id INTEGER UNIQUE NOT NULL PRIMARY KEY,
     itemId INTEGER UNIQUE NOT NULL,
-    count INTEGER NOT NULL
+    count INTEGER AS Int NOT NULL,
+    FOREIGN KEY (id) REFERENCES CatalogItem(id)
 );
 
-getBasket:
-SELECT * FROM BasketItem;
-
-getItemFromId:
-SELECT * FROM BasketItem
-WHERE id = :id;
+responseItemFromId:
+SELECT count,imgUrl,label,priceSale,weight FROM BasketItem
+JOIN CatalogItem ON itemId = id;
 
 updateItem:
 UPDATE BasketItem
