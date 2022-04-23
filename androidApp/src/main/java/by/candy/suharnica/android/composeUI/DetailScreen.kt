@@ -1,15 +1,13 @@
 package by.candy.suharnica.android.composeUI
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -157,29 +155,36 @@ fun DetailScreen(viewModel: MainViewModel, itemId: Long) {
 
             }
         }
-        Box(
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
-                .background(color = Color.Red)
-                .border(2.dp, color = Color.Black, shape = RoundedCornerShape(20.dp))
-                .align(Alignment.BottomCenter)
+                //.border(2.dp, color = Color.Black, shape = RoundedCornerShape(20.dp))
+                .align(Alignment.BottomCenter),
+            backgroundColor = Color.Red,
+            border = BorderStroke(2.dp, color = Color.Black),
+            shape = RoundedCornerShape(8.dp)
         ) {
-            Text(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterStart),
-                text = stringResource(id = MR.strings.add_to_basket.resourceId),
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Medium
-            )
-            Icon(
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .align(Alignment.CenterEnd),
-                painter = painterResource(id = Icons.BigPlus.image),
-                contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.CenterStart),
+                    text = stringResource(id = MR.strings.add_to_basket.resourceId),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Icon(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .align(Alignment.CenterEnd),
+                    painter = painterResource(id = Icons.BigPlus.image),
+                    contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
+                )
+            }
+
         }
     }
 }
