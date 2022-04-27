@@ -7,7 +7,6 @@ import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrDefault
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
@@ -16,8 +15,6 @@ import sqldelight.*
 class BasketDatabase(database: CandyDatabase) {
 
     private val dbQuery = database.basketItemQueries
-
-    val totalCountFlow = flow<Int> {  }
 
     internal suspend fun onItemIntoDatabase(idItem: Long, mode: OnBasketMode) {
         withContext(Dispatchers.Default) {
@@ -60,8 +57,9 @@ class BasketDatabase(database: CandyDatabase) {
         return dbQuery.getCountFromId(idItem).asFlow().mapToOneOrDefault(0)
     }
 
-    internal fun getTotalCount(): Int {
-        return dbQuery.getTotalCount().executeAsOneOrNull()?.SUM ?: 0
+    /*internal fun getTotalCount(): Flow<Int> {
+        return dbQuery.getTotalCount().asFlow().mapToOneOrDefault(defaultValue = GetTotalCount(0))
+            .mapNotNull { it.SUM }
     }
 
     internal fun getTotalPrice(): Flow<Double> {
@@ -69,9 +67,10 @@ class BasketDatabase(database: CandyDatabase) {
             .mapNotNull { it.SUM }
     }
 
-    internal fun getTotalWeight(): Int {
-        return dbQuery.getTotalWeight().executeAsOneOrNull()?.SUM ?: 0
-    }
+    internal fun getTotalWeight(): Flow<Int> {
+        return dbQuery.getTotalWeight().asFlow()
+            .mapToOneOrDefault(defaultValue = GetTotalWeight(0)).mapNotNull { it.SUM }
+    }*/
 }
 
 enum class OnBasketMode {

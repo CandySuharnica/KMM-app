@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import by.candy.suharnica.android.BasketItem
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
@@ -38,7 +39,8 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
         NavGraph.Basket,
         NavGraph.Profile
     )
-    val totalCount = viewModel.totalCount.collectAsState(initial = 0)
+    val basketItems = viewModel.getBasket.collectAsState(initial = listOf()).value
+    val totalCount = basketItems.sumOf { it.count }
     BottomNavigation(
         backgroundColor = Color.White,
         contentColor = Color.Black
@@ -58,7 +60,7 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
                             Text(
                                 modifier = Modifier.padding(top = 2.dp),
                                 text =
-                                if (totalCount.value > 0) "${totalCount.value}"
+                                if (totalCount > 0) "$totalCount"
                                 else "",
                                 color = Colors.RedButton.color,
                                 fontWeight = FontWeight.SemiBold

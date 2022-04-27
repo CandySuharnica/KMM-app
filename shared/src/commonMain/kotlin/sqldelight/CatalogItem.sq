@@ -32,6 +32,9 @@ insertItem:
 INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,calorie,carbohydrates,fats,protein)
 VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:calorie,:carbohydrates,:fats,:protein);
 
+getTypes:
+SELECT DISTINCT type FROM CatalogItem;
+
 --@Query("SELECT * FROM catalog")
  --   fun getAll(): List<CatalogItemDbEntity>
 

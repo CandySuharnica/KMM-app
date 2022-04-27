@@ -20,9 +20,9 @@ class MainViewModel(
 
     val getBasket: Flow<List<BasketItem>> = candySdk.getBasket()
 
-    val totalCount = candySdk.getTotalCount()
+   /* val totalCount = candySdk.getTotalCount()
     val totalPrice = candySdk.getTotalPrice()
-    val totalWeight = candySdk.getTotalWeight()
+    val totalWeight = candySdk.getTotalWeight()*/
 
     fun getItemFromId(id:Long) = candySdk.getItemFromId(id)
 
@@ -33,6 +33,8 @@ class MainViewModel(
             candySdk.addItem(id,mode)
         }
     }
+
+    val getTypes =candySdk.getTypes()
 
     class Factory(private val candySdk: CandySDK) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
