@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import by.candy.suharnica.android.BasketItem
 import by.candy.suharnica.android.MainViewModel
+import by.candy.suharnica.android.composeUI.profile.Profile
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
@@ -128,7 +129,7 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             BasketScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
-            ProfileScreen1()
+            Profile()
         }
         composable(
             "${NavGraph.DetailScreen.route}/itemId={itemId}",
