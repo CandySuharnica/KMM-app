@@ -1,6 +1,7 @@
 package by.candy.suharnica.android.composeUI.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,38 +24,69 @@ import by.candy.suharnica.android.utils.Icons
 @Composable
 fun Profile(){
     Column {
-        Divider(color = Color.Black, thickness = 2.dp)
+        topBar()
         topCard()
-        Divider(color = Color.Black, thickness = 2.dp)
+        Spacer(modifier = Modifier.height(10.dp))
         myFavorites()
-        Divider(color = Color.Black, thickness = 2.dp)
-        Text(text = stringResource(id = MR.strings.delivery_profile.resourceId))
+        Spacer(modifier = Modifier.height(10.dp))
         myOrders()
-        Divider(color = Color.Black, thickness = 2.dp)
+        Spacer(modifier = Modifier.height(20.dp))
         ourBakeries()
+        ourSupport()
     }
 }
 
 @Composable
+fun topBar() {
+    Box(modifier = Modifier.fillMaxWidth()) {
+        IconButton(
+            modifier = Modifier.align(Alignment.CenterStart),
+            onClick = { /*TODO*/ }) {
+            Image(
+                painter = painterResource(id = Icons.ArrowBack.image),
+                contentDescription = stringResource(id = Icons.ArrowBack.description.resourceId),
+
+            )
+        }
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            text = stringResource(id = MR.strings.profile_title.resourceId),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+    Divider(
+        thickness = 2.dp,
+        color = Color.Black
+    )
+}
+
+@Composable
 fun topCard(){
-    Card(
-        shape = RoundedCornerShape(4.dp),
-        backgroundColor = MaterialTheme.colors.surface,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 16.dp, end = 8.dp)
         ){
             Image(
                 painter = painterResource(Icons.Profile.image),
                 contentDescription = "Profile photo",
                 modifier = Modifier
-                    .size(width = 100.dp, height = 90.dp)
+                    .size(width = 90.dp, height = 80.dp)
+                    .padding(start = 8.dp)
+                    .border(2.dp, Color.Black, shape = RectangleShape)
             )
-            Column() {
-                Row() {
+            Column(
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxHeight()
+                    .padding(start = 8.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
                     Text(text = stringResource(id = MR.strings.full_name_example.resourceId),
                         //fontFamily = GolosFontFamily,
                         fontWeight = FontWeight.SemiBold,
@@ -82,7 +115,6 @@ fun topCard(){
                 Divider(color = Color.Black, thickness = 2.dp)
             }
         }
-    }
 }
 
 /*@Composable
@@ -117,11 +149,23 @@ fun someInfo(){
 
 @Composable
 fun myFavorites() {
-    Row(){
+    Row(
+        modifier = Modifier
+            .padding(start = 8.dp, end = 8.dp)
+            .fillMaxWidth()
+    ){
         Icon(painter = painterResource(Icons.Smile.image),
-            contentDescription = "smile icon")
-        Column() {
-            Row() {
+            contentDescription = "smile icon",
+            modifier = Modifier.padding(end = 2.dp))
+        Column(
+            modifier = Modifier.padding(bottom = 2.dp)
+                .fillMaxWidth()
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 Text(text = stringResource(id = MR.strings.favorite_desserts.resourceId),
                     //fontFamily = GolosFontFamily,
                     fontWeight = FontWeight.Normal,
@@ -141,7 +185,10 @@ fun myOrders(){
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 16.dp, start = 8.dp)
     ) {
+        Text(text = stringResource(id = MR.strings.delivery_profile.resourceId),
+        Modifier.padding(start = 2.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -149,12 +196,11 @@ fun myOrders(){
         ) {
             Icon(painter = painterResource(Icons.Plus.image),
                 contentDescription = stringResource(id = MR.strings.plus.resourceId),
-                modifier = Modifier.weight(1f))
+                Modifier.padding(end = 2.dp))
             Text(text = stringResource(id = MR.strings.my_orders_profile.resourceId),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                modifier = Modifier.weight(4f))
+                fontSize = 16.sp)
         }
         LazyColumn{
 
@@ -164,10 +210,61 @@ fun myOrders(){
 
 @Composable
 fun ourBakeries(){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(painter = painterResource(Icons.Plus.image),
+                contentDescription = stringResource(id = MR.strings.plus.resourceId),
+                Modifier.padding(end = 2.dp))
+            Text(text = stringResource(id = MR.strings.our_bakeries_profile.resourceId),
+                //fontFamily = GolosFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp)
+        }
+        LazyColumn{
 
+        }
+    }
 }
 
-@Preview(showBackground = true)
+@Composable
+fun ourSupport() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, start = 8.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(Icons.Plus.image),
+                contentDescription = stringResource(id = MR.strings.plus.resourceId),
+                Modifier.padding(end = 2.dp)
+            )
+            Text(
+                text = stringResource(id = MR.strings.support_profile.resourceId),
+                //fontFamily = GolosFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp
+            )
+        }
+        LazyColumn {
+
+        }
+    }
+}
+
+@Preview
 @Composable
 fun PreviewProfile(){
     Profile()
