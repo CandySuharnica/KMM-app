@@ -24,35 +24,52 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import by.candy.suharnica.android.MainViewModel
+import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlin.coroutines.coroutineContext
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) {
     val items = listOf(
         NavGraph.Catalog,
         NavGraph.Basket,
         NavGraph.Profile
     )
+    val totalCount = viewModel.totalCount.collectAsState(initial = 0)
     BottomNavigation(
         backgroundColor = Color.White,
         contentColor = Color.Black
     ) {
         items.forEach { item ->
             BottomNavigationItem(
-                //modifier = Modifier.padding(top = 35.dp),
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 selected = true,
-
                 icon = {
-                    Icon(
-                        painter = painterResource(id = item.icon!!.image),
-                        contentDescription = stringResource(id = item.icon.description.resourceId)
-                    )
+                    if (item.icon == Icons.Basket)
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                painter = painterResource(id = item.icon.image),
+                                contentDescription = stringResource(id = item.icon.description.resourceId)
+                            )
+                            Text(
+                                modifier = Modifier.padding(top = 2.dp),
+                                text =
+                                if (totalCount.value > 0) "${totalCount.value}"
+                                else "",
+                                color = Colors.RedButton.color,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    else
+                        Icon(
+                            painter = painterResource(id = item.icon!!.image),
+                            contentDescription = stringResource(id = item.icon.description.resourceId)
+                        )
                 },
-
                 onClick = {
                     navController.navigate(item.route) {
                         // Pop up to the start destination of the graph to
@@ -78,8 +95,6 @@ fun BottomNavigationBar(navController: NavController) {
         thickness = 2.dp
     )
 }
-
-
 
 @Composable
 fun ProfileScreen1() {
@@ -117,19 +132,22 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             "${NavGraph.DetailScreen.route}/itemId={itemId}",
             arguments = listOf(navArgument("itemId") { type = NavType.LongType })
         ) { backStackEntry ->
-            DetailScreen(viewModel, backStackEntry.arguments?.getLong("itemId") ?: 0)
+            DetailScreen(viewModel, navController, backStackEntry.arguments?.getLong("itemId") ?: 0)
         }
     }
 }
 
 
-//@Preview(showBackground = true)
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = Color.White
+    )
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController, viewModel)
         }
     ) {
         Navigation(navController, viewModel)

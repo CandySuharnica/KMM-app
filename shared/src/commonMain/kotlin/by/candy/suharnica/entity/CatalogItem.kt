@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CatalogItem(
-    val id: Int = 0,
+    val id: Long = 0,
     @SerialName("name")
     val label: String = "",
     val type: String = "", //for filter in the groups
@@ -16,8 +16,10 @@ data class CatalogItem(
     var likes: Int = 0,
     var about: String = "",
     @SerialName("product_composition")
-    var productComposition: List<String> = emptyList(),
-    @SerialName("nutritional_value")
-    var nutritionalValue: List<String> = emptyList(),
+    var productComposition: String = "",
+    var calorie: String = "",
+    var carbohydrates: String = "",
+    var fats: String = "",
+    var protein: String = "",
     //var isLiked: Boolean = false
 )

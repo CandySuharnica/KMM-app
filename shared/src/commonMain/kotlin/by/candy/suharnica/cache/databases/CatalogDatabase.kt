@@ -1,9 +1,7 @@
 package by.candy.suharnica.cache.databases
 
-import by.candy.suharnica.cache.DatabaseDriverFactory
 import by.candy.suharnica.core.dataSource.database.CandyDatabase
 import by.candy.suharnica.entity.CatalogItem
-import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +22,7 @@ class CatalogDatabase(database: CandyDatabase) {
         withContext(Dispatchers.Default) {
             items.forEach {
                 dbQuery.insertItem(
-                    id = it.id.toLong(),
+                    id = it.id,
                     label = it.label,
                     type = it.type,
                     weight = it.weight,
@@ -34,7 +32,10 @@ class CatalogDatabase(database: CandyDatabase) {
                     likes = it.likes,
                     about = it.about,
                     productComposition = it.productComposition,
-                    nutritionalValue = it.nutritionalValue
+                    calorie = it.calorie,
+                    carbohydrates = it.carbohydrates,
+                    fats = it.fats,
+                    protein = it.protein,
                 )
             }
         }
@@ -56,11 +57,14 @@ class CatalogDatabase(database: CandyDatabase) {
         priceSale: Double,
         likes: Int,
         about: String,
-        productComposition: List<String>,
-        nutritionalValue: List<String>
+        productComposition: String,
+        calorie: String,
+        carbohydrates: String,
+        fats: String,
+        protein: String
     ): CatalogItem {
         return CatalogItem(
-            id = id.toInt(),
+            id = id,
             label = label,
             type = type,
             weight = weight,
@@ -70,7 +74,10 @@ class CatalogDatabase(database: CandyDatabase) {
             likes = likes,
             about = about,
             productComposition = productComposition,
-            nutritionalValue = nutritionalValue
+            calorie = calorie,
+            carbohydrates = carbohydrates,
+            fats = fats,
+            protein = protein
         )
     }
 }

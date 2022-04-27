@@ -11,8 +11,11 @@ CREATE TABLE CatalogItem (
     priceSale REAL NOT NULL,
     likes INTEGER AS Int NOT NULL,
     about TEXT NOT NULL,
-    productComposition TEXT AS List<String> NOT NULL,
-    nutritionalValue TEXT AS List<String> NOT NULL
+    calorie TEXT NOT NULL,
+    carbohydrates TEXT NOT NULL,
+    fats TEXT NOT NULL,
+    protein TEXT NOT NULL,
+    productComposition TEXT NOT NULL
 );
 
 getAll:
@@ -26,8 +29,8 @@ removeAllItems:
 DELETE FROM CatalogItem;
 
 insertItem:
-INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,nutritionalValue)
-VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:nutritionalValue);
+INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,calorie,carbohydrates,fats,protein)
+VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:calorie,:carbohydrates,:fats,:protein);
 
 --@Query("SELECT * FROM catalog")
  --   fun getAll(): List<CatalogItemDbEntity>
