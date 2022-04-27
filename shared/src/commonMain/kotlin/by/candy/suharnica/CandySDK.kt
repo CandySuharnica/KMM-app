@@ -15,11 +15,6 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = Database(databaseDriverFactory)
     private val api = CandySuharnicaAPI()
 
-    private val flow = flow {
-        emit(database.basketDatabase.getTotalCount())
-    }
-
-
     @Throws(Exception::class)
     fun getCatalogList(): Flow<List<CatalogItem>> {
 
@@ -49,8 +44,10 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
 
     fun getCount(idItem: Long) = database.basketDatabase.getCount(idItem)
 
-    fun getTotalCount() = flow
+    fun getTypes() = database.catalogDatabase.getTypes()
+
+    /*fun getTotalCount() = database.basketDatabase.getTotalCount()
     fun getTotalPrice() = database.basketDatabase.getTotalPrice()
-    fun getTotalWeight() = database.basketDatabase.getTotalWeight()
+    fun getTotalWeight() = database.basketDatabase.getTotalWeight()*/
 
 }

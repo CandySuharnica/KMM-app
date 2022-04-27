@@ -31,7 +31,6 @@ import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.cache.databases.OnBasketMode
 import coil.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.math.absoluteValue
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterialApi::class)
@@ -39,8 +38,7 @@ import kotlin.math.absoluteValue
 fun BasketScreen(viewModel: MainViewModel) {
     val basketItems = viewModel.getBasket
         .collectAsState(initial = listOf()).value
-    //val totalPrice = basketItems.sumOf { it.priceSale * it.count }
-    val totalPrice = viewModel.totalPrice.collectAsState(initial = 0.0)
+    val totalPrice = basketItems.sumOf { it.priceSale * it.count }
     val totalWeight = basketItems.sumOf { it.weight * it.count }
     Box(modifier = Modifier.fillMaxSize()) {
         Column() {
@@ -177,7 +175,7 @@ fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
                     )
 
                     Text(
-                        text = item.priceSale.absoluteValue.toString().plus(" BYN"),
+                        text = item.priceSale.toString().plus(" BYN"),
                         fontSize = 16.sp
                     )
                     Text(

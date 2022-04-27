@@ -47,6 +47,8 @@ class CatalogDatabase(database: CandyDatabase) {
 
     internal fun getItemFromId(id: Long) = dbQuery.getItemFromId(id).executeAsOne()
 
+    internal fun getTypes() = dbQuery.getTypes().asFlow().mapToList()
+
     private fun mapCatalog(
         id: Long,
         label: String,

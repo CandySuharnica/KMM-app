@@ -45,6 +45,7 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
         modifier = Modifier.fillMaxSize()
     ) {
         SearchBar()
+        SortBar(viewModel = viewModel)
         Box() {
             LazyVerticalGrid(
                 modifier = Modifier.padding(bottom = 59.dp),
