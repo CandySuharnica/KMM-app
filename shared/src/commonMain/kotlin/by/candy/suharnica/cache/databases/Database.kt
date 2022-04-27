@@ -21,9 +21,7 @@ class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = CandyDatabase(
         driver = databaseDriverFactory.createDriver(),
         CatalogItemAdapter = CatalogItem.Adapter(
-            imgUrlAdapter = listOfStringsAdapter,
-            productCompositionAdapter = listOfStringsAdapter,
-            nutritionalValueAdapter = listOfStringsAdapter
+            imgUrlAdapter = listOfStringsAdapter
         )
     )
 

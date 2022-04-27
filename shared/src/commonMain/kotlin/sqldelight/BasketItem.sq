@@ -6,8 +6,27 @@ CREATE TABLE BasketItem (
 );
 
 responseItemFromId:
-SELECT count,imgUrl,label,priceSale,weight FROM BasketItem
-JOIN CatalogItem ON itemId = id;
+SELECT CatalogItem.id,count,imgUrl,label,priceSale,weight FROM BasketItem
+JOIN CatalogItem ON itemId = CatalogItem.id;
+
+getItemFromId:
+SELECT * FROM BasketItem
+WHERE itemId == :id;
+
+getCountFromId:
+SELECT count FROM BasketItem
+WHERE itemId == :id;
+
+getTotalCount:
+SELECT SUM(count) FROM BasketItem;
+
+getTotalWeight:
+SELECT SUM(weight) FROM BasketItem
+JOIN CatalogItem ON itemId = CatalogItem.id;
+
+getTotalPrice:
+SELECT SUM(priceSale) FROM BasketItem
+JOIN CatalogItem ON itemId = CatalogItem.id;
 
 updateItem:
 UPDATE BasketItem

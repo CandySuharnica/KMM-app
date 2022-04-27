@@ -19,6 +19,11 @@
     <!-- catalog screen -->
     <string name="price">Price</string>
 
+    <!-- basket screen -->
+    <string name="basket">Basket</string>
+    <string name="choose">Choose</string>
+    <string name="place_an_order">Place an order</string>
+
     <!-- detail screen -->
     <string name="composition">Composition:</string>
     <string name="nutrition_facts">Nutrition Facts(100g):</string>

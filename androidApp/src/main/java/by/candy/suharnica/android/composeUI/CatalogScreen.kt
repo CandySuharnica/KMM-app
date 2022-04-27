@@ -1,16 +1,11 @@
 package by.candy.suharnica.android.composeUI
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.magnifier
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,40 +15,61 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import by.candy.suharnica.android.BasketItem
 import by.candy.suharnica.android.MainViewModel
+import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
+import by.candy.suharnica.cache.databases.OnBasketMode
 import by.candy.suharnica.entity.CatalogItem
 import coil.compose.SubcomposeAsyncImage
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CatalogScreen(viewModel: MainViewModel,navController: NavController) {
-    val catalogItems = viewModel.catalogList.collectAsState(initial = listOf()).value
+fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
+    val catalogItems = viewModel.catalogList
+        .collectAsState(initial = listOf()).value
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         SearchBar()
-        LazyVerticalGrid(
-            modifier = Modifier.padding(bottom = 59.dp),
-            cells = GridCells.Fixed(2)
-        ) {
-            items(
-                items = catalogItems,
-                itemContent = {
-                    CatalogItem(item = it,navController)
-                }
+        Box() {
+            LazyVerticalGrid(
+                modifier = Modifier.padding(bottom = 59.dp),
+                cells = GridCells.Fixed(2)
+            ) {
+                items(
+                    items = catalogItems,
+                    itemContent = {
+                        CatalogItem(item = it, navController, viewModel)
+                    }
+                )
+            }
+            Divider(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(8.dp)
+                    .align(Alignment.CenterStart),
+                color = Color.White
+            )
+            Divider(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(8.dp)
+                    .align(Alignment.CenterEnd),
+                color = Color.White
             )
         }
     }
@@ -61,13 +77,19 @@ fun CatalogScreen(viewModel: MainViewModel,navController: NavController) {
 
 
 @Composable
-fun CatalogItem(item: CatalogItem,navController: NavController) {
+fun CatalogItem(
+    item: CatalogItem, navController: NavController,
+    viewModel: MainViewModel
+) {
+    val count = viewModel.getItemCountInBasket(item.id)
+        .collectAsState(initial = 0).value
+
     Box(modifier = Modifier
         .drawBehind {
             drawLine(
                 Color.Black,
-                Offset(0f, 0f),
-                Offset(size.width, 0f),
+                Offset(0f, size.height),
+                Offset(size.width, size.height),
                 7f
             )
             drawLine(
@@ -78,9 +100,9 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
             )
         }
         .padding(2.dp)
-        .clickable ( onClick = {
+        .clickable(onClick = {
             navController.navigate("${NavGraph.DetailScreen.route}/itemId=${item.id}")
-        } )
+        })
     ) {
         Column() {
             SubcomposeAsyncImage(
@@ -97,14 +119,14 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
-            Row() {
+            Row(modifier = Modifier.padding(start = 10.dp)) {
                 Text(
-                    text = item.price.toString().plus(" BYN"),
+                    modifier = Modifier
+                        .background(Colors.RedSale.color)
+                        .padding(horizontal = 2.dp),
+                    text = "${item.price} BYN",
                     fontWeight = FontWeight.Black,
-                    fontSize = 22.sp,
-                    style = TextStyle(
-                        background = Color.Red
-                    )
+                    fontSize = 22.sp
                 )
                 Text(
                     modifier = Modifier
@@ -118,19 +140,20 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
                             )
                         },
                     fontSize = 16.sp,
-                    text = item.priceSale.toString(),
+                    text = "${item.priceSale}",
                     color = Color.Gray
                 )
             }
 
             Text(
+                modifier = Modifier.padding(start = 10.dp),
                 text = item.label,
                 fontSize = 16.sp,
                 maxLines = 1
             )
             Text(
-                modifier = Modifier.padding(bottom = 11.dp),
-                text = item.weight.toString().plus(" г"),
+                modifier = Modifier.padding(start = 10.dp, bottom = 11.dp),
+                text = "${item.weight} г",
                 color = Color.Gray,
                 fontSize = 12.sp
             )
@@ -138,7 +161,7 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
         Row(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(11.dp)
+                .padding(start = 16.dp, top = 11.dp)
         ) {
             Icon(
                 painter = painterResource(id = Icons.Smile.image),
@@ -149,12 +172,12 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
                 text = item.likes.toString()
             )
         }
-        Box(
+        IconButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(11.dp)
-        ) {
-            Icon(
+                .padding(11.dp),
+            onClick = { viewModel.addItemIntoBasket(item.id, OnBasketMode.ADD) }) {
+            Image(
                 painter = painterResource(id = Icons.Basket.image),
                 contentDescription = stringResource(id = Icons.Basket.description.resourceId)
             )
@@ -162,11 +185,12 @@ fun CatalogItem(item: CatalogItem,navController: NavController) {
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 4.dp),
-                text = "11",
+                text = if (count == 0) "" else "$count",
                 fontWeight = FontWeight.Medium,
                 color = Color.Gray
             )
         }
+
     }
 
 }

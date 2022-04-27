@@ -19,6 +19,11 @@
     <!-- catalog screen -->
     <string name="price">Цена</string>
 
+    <!-- basket screen -->
+    <string name="basket">Корзина</string>
+    <string name="choose">Выбрать</string>
+    <string name="place_an_order">Оформить заказ</string>
+
     <!-- detail screen -->
     <string name="composition">Состав:</string>
     <string name="nutrition_facts">Пищевая ценность(100г):</string>
