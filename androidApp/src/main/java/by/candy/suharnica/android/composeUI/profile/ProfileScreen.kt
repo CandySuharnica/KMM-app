@@ -1,4 +1,3 @@
-/*
 package by.candy.suharnica.android.composeUI.profile
 
 import androidx.compose.foundation.Image
@@ -26,11 +25,10 @@ fun Profile(){
         Divider(color = Color.Black, thickness = 2.dp)
         topCard()
         Divider(color = Color.Black, thickness = 2.dp)
-        someInfo()
-        Divider(color = Color.Black, thickness = 2.dp)
-        myOrders()
-        Divider(color = Color.Black, thickness = 2.dp)
         myFavorites()
+        Divider(color = Color.Black, thickness = 2.dp)
+        Text(text = stringResource(id = MR.strings.delivery_profile.resourceId))
+        myOrders()
         Divider(color = Color.Black, thickness = 2.dp)
         ourBakeries()
     }
@@ -49,45 +47,45 @@ fun topCard(){
                 .fillMaxWidth()
         ){
             Image(
-                    painter = painterResource(Icons.Profile.image),
-                    contentDescription = "Profile photo",
-                    modifier = Modifier
-                        .size(width = 100.dp, height = 90.dp)
-                        .weight(1f)
-                )
-            Column(modifier = Modifier
-                .weight(3f)) {
-                Text(text = stringResource(id = MR.strings.full_name.resourceId),
-                    //fontFamily = GolosFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp
-                )
-                Text(text = stringResource(id = R.string.phone_number_profile_example),
-                    //fontFamily = GolosFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
-                )
-                Text(text = stringResource(id = R.string.address_profile_example),
-                    //fontFamily = GolosFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
-                )
-            }
-            IconButton(
-                onClick = {  },
+                painter = painterResource(Icons.Profile.image),
+                contentDescription = "Profile photo",
                 modifier = Modifier
-                    .size(31.dp)
-                ) {
-                Icon(
-                    painter = painterResource(Icons.Edit.image),
-                    contentDescription = "Edit icon")
+                    .size(width = 100.dp, height = 90.dp)
+            )
+            Column() {
+                Row() {
+                    Text(text = stringResource(id = MR.strings.full_name_example.resourceId),
+                        //fontFamily = GolosFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp
+                    )
+                    IconButton(
+                        onClick = {  },
+                        modifier = Modifier
+                            .size(31.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(Icons.Edit.image),
+                            contentDescription = "Edit icon")
+                    }
+                }
+                Text(text = stringResource(id = MR.strings.phone_number_example.resourceId),
+                    //fontFamily = GolosFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp
+                )
+                Text(text = stringResource(id = MR.strings.address_example.resourceId),
+                    //fontFamily = GolosFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp
+                )
+                Divider(color = Color.Black, thickness = 2.dp)
             }
-
         }
     }
 }
 
-@Composable
+/*@Composable
 fun someInfo(){
     Card(
         modifier = Modifier
@@ -96,11 +94,11 @@ fun someInfo(){
         Row(
             horizontalArrangement = Arrangement.SpaceAround
         ){
-            Text(text = stringResource(id = R.string.bank_card_number_profile),
+            Text(text = stringResource(id = MR.strings.bank_card_number_profile),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp)
-            Text(text = stringResource(id = R.string.amount_example_xx),
+            Text(text = stringResource(id = MR.strings.amount_example_xx),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp)
@@ -113,6 +111,27 @@ fun someInfo(){
                     painter = painterResource(Icons.Edit.image),
                     contentDescription = "Edit icon")
             }
+        }
+    }
+}*/
+
+@Composable
+fun myFavorites() {
+    Row(){
+        Icon(painter = painterResource(Icons.Smile.image),
+            contentDescription = "smile icon")
+        Column() {
+            Row() {
+                Text(text = stringResource(id = MR.strings.favorite_desserts.resourceId),
+                    //fontFamily = GolosFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp)
+                Text(text = stringResource(id = MR.strings.number_count_example.resourceId),
+                    //fontFamily = GolosFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp)
+            }
+            Divider(color = Color.Black, thickness = 2.dp)
         }
     }
 }
@@ -126,58 +145,21 @@ fun myOrders(){
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(painter = painterResource(Icons.Basket.image),
-                contentDescription = "small basket icon",
+            Icon(painter = painterResource(Icons.Plus.image),
+                contentDescription = stringResource(id = MR.strings.plus.resourceId),
                 modifier = Modifier.weight(1f))
-            Text(text = stringResource(id = R.string.my_orders_profile),
+            Text(text = stringResource(id = MR.strings.my_orders_profile.resourceId),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 modifier = Modifier.weight(4f))
-            Text(text = stringResource(id = R.string.delivery_text),
-                //fontFamily = GolosFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                modifier = Modifier.weight(4f))
-            Text(text = stringResource(id = R.string.delivery_time),
-                //fontFamily = GolosFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                modifier = Modifier.weight(2f))
-            IconButton(
-                onClick = {  },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    painter = painterResource(Icons.Plus.image),
-                    contentDescription = stringResource(id = Icons.Plus.description.resourceId))
-            }
         }
         LazyColumn{
 
         }
     }
-}
-
-@Composable
-fun myFavorites() {
-    Row(){
-        Icon(painter = painterResource(Icons.Smile.image),
-            contentDescription = "smile icon",
-            modifier = Modifier.weight(1f))
-        Text(text = stringResource(id = R.string.favorites_desserts),
-            //fontFamily = GolosFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            modifier = Modifier.weight(4f))
-        Text(text = stringResource(id = R.string.amount_example_xx),
-            //fontFamily = GolosFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            modifier = Modifier.weight(1f))
-        }
 }
 
 @Composable
@@ -190,4 +172,4 @@ fun ourBakeries(){
 fun PreviewProfile(){
     Profile()
 }
-*/
+
