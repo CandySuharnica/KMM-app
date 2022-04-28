@@ -18,6 +18,8 @@
 
     <!-- catalog screen -->
     <string name="price">Цена</string>
+    <string name="all">Все</string>
+    <string name="favorite">Любимое</string>
 
     <!-- basket screen -->
     <string name="basket">Корзина</string>

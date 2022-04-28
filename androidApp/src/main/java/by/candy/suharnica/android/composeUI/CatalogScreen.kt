@@ -39,12 +39,14 @@ import coil.compose.SubcomposeAsyncImage
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
-    val catalogItems = viewModel.catalogList
+    val sortFlow = viewModel.sortFlow.collectAsState().value
+    val searchFlow = viewModel.searchFlow.collectAsState().value
+    val catalogItems = viewModel.catalogList(sortFlow, searchFlow)
         .collectAsState(initial = listOf()).value
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchBar()
+        SearchBar(viewModel)
         SortBar(viewModel = viewModel)
         Box() {
             LazyVerticalGrid(

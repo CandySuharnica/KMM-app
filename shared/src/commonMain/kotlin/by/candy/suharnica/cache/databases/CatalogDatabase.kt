@@ -41,8 +41,8 @@ class CatalogDatabase(database: CandyDatabase) {
         }
     }
 
-    internal fun getAllLaunches(): Flow<List<CatalogItem>> {
-        return dbQuery.getAll(::mapCatalog).asFlow().mapToList()
+    internal fun getAllItems(type: String, sort: String): Flow<List<CatalogItem>> {
+        return dbQuery.getAll(type = type,sort = sort, mapper = ::mapCatalog).asFlow().mapToList()
     }
 
     internal fun getItemFromId(id: Long) = dbQuery.getItemFromId(id).executeAsOne()

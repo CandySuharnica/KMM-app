@@ -18,6 +18,8 @@
 
     <!-- catalog screen -->
     <string name="price">Price</string>
+    <string name="all">All</string>
+    <string name="favorite">Favorite</string>
 
     <!-- basket screen -->
     <string name="basket">Basket</string>
