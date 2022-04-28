@@ -14,6 +14,7 @@
     <string name="share">Share</string>
 
     <!-- profile screen -->
+    <string name="profile_title">Profile</string>
     <string name="full_name">Enter full name</string>
     <string name="favorite_desserts">Favorite desserts</string>
     <string name="delivery_profile">Delivery</string>

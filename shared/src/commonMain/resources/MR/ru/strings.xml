@@ -14,6 +14,7 @@
     <string name="share">Поделиться</string>
 
     <!-- profile screen -->
+    <string name="profile_title">Личный кабинет</string>
     <string name="full_name">Введите полное имя</string>
     <string name="favorite_desserts">Любимые десерты</string>
     <string name="delivery_profile">Доставка</string>
