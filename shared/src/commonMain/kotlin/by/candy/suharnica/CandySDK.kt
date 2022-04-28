@@ -5,21 +5,20 @@ import by.candy.suharnica.cache.databases.Database
 import by.candy.suharnica.cache.databases.OnBasketMode
 import by.candy.suharnica.entity.CatalogItem
 import by.candy.suharnica.network.CandySuharnicaAPI
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrDefault
 import kotlinx.coroutines.flow.*
-import sqldelight.GetTotalCount
-import sqldelight.GetTotalPrice
 
 class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = Database(databaseDriverFactory)
     private val api = CandySuharnicaAPI()
 
     @Throws(Exception::class)
-    fun getCatalogList(): Flow<List<CatalogItem>> {
+    fun getCatalogList(type: String, sort: String): Flow<List<CatalogItem>> {
 
         return flow {
-            val cachedLaunches = database.catalogDatabase.getAllLaunches().first()
+            val cachedLaunches =
+                database.catalogDatabase.getAllItems(type = if (type == "Все") "%"
+                                                    else type,
+                    sort = "$sort%").first()
 
             val catalogItems = api.getAllLaunches()
 
@@ -29,7 +28,7 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
                 }
             else database.catalogDatabase.fillDB(items = catalogItems)
 
-            emit(catalogItems)
+            emit(cachedLaunches)
         }
 
     }

@@ -19,7 +19,8 @@ CREATE TABLE CatalogItem (
 );
 
 getAll:
-SELECT * FROM CatalogItem;
+SELECT * FROM CatalogItem
+WHERE type LIKE :type AND label LIKE :sort;
 
 getItemFromId:
 SELECT * FROM CatalogItem
