@@ -129,7 +129,7 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             BasketScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
-            Profile()
+            Profile(viewModel)
         }
         composable(
             "${NavGraph.DetailScreen.route}/itemId={itemId}",
