@@ -1,12 +1,14 @@
 package by.candy.suharnica.android.composeUI.profile
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,11 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.candy.suharnica.MR
+import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Icons
 
 
 @Composable
-fun Profile(){
+fun Profile(viewModel: MainViewModel){
+    val orderItems = viewModel.getBasket
+        .collectAsState(initial = listOf()).value
     Column {
         topBar()
         topCard()
@@ -158,7 +163,8 @@ fun myFavorites() {
             contentDescription = "smile icon",
             modifier = Modifier.padding(end = 2.dp))
         Column(
-            modifier = Modifier.padding(bottom = 2.dp)
+            modifier = Modifier
+                .padding(bottom = 2.dp)
                 .fillMaxWidth()
         ) {
             Row(
@@ -182,6 +188,7 @@ fun myFavorites() {
 
 @Composable
 fun myOrders(){
+    var expanded by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -196,20 +203,24 @@ fun myOrders(){
         ) {
             Icon(painter = painterResource(Icons.Plus.image),
                 contentDescription = stringResource(id = MR.strings.plus.resourceId),
-                Modifier.padding(end = 2.dp))
+                Modifier.padding(end = 2.dp)
+                    .clickable { expanded.not() })
             Text(text = stringResource(id = MR.strings.my_orders_profile.resourceId),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp)
         }
-        LazyColumn{
+        AnimatedVisibility(visible = expanded) {
+            LazyColumn{
 
+            }
         }
     }
 }
 
 @Composable
 fun ourBakeries(){
+        var expanded by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -222,20 +233,26 @@ fun ourBakeries(){
         ) {
             Icon(painter = painterResource(Icons.Plus.image),
                 contentDescription = stringResource(id = MR.strings.plus.resourceId),
-                Modifier.padding(end = 2.dp))
+                Modifier
+                    .padding(end = 2.dp)
+                    .clickable { expanded != expanded })
             Text(text = stringResource(id = MR.strings.our_bakeries_profile.resourceId),
                 //fontFamily = GolosFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp)
         }
-        LazyColumn{
-
+        if(expanded) {
+            Text(text = stringResource(id = MR.strings.street_example_profile_1.resourceId),
+                //fontFamily = GolosFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp)
         }
     }
 }
 
 @Composable
 fun ourSupport() {
+    var visible by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -250,6 +267,7 @@ fun ourSupport() {
                 painter = painterResource(Icons.Plus.image),
                 contentDescription = stringResource(id = MR.strings.plus.resourceId),
                 Modifier.padding(end = 2.dp)
+                    .clickable { visible != visible }
             )
             Text(
                 text = stringResource(id = MR.strings.support_profile.resourceId),
@@ -258,15 +276,17 @@ fun ourSupport() {
                 fontSize = 16.sp
             )
         }
-        LazyColumn {
-
+        AnimatedVisibility(visible = visible,
+            enter = expandVertically(),
+            exit = shrinkVertically()) {
+            Text(text = stringResource(id = MR.strings.phone_number_example_profile_1.resourceId))
         }
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun PreviewProfile(){
     Profile()
-}
+}*/
 

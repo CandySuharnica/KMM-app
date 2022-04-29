@@ -26,12 +26,16 @@
     <string name="phone_number_example">+375 xx xxx-xx-xx</string>
     <string name="address_example">Минск, ул.Дляпримерная 1</string>
     <string name="number_count_example">23</string>
-    <string name="street_example_profile_1">ул. Инвизибильная 24</string>
-    <string name="street_example_profile_2">ул. Нескажу 121</string>
-    <string name="street_example_profile_3">просп. Невидимого 148/3</string>
-    <string name="phone_number_example_profile_1">+375 01 234-56-78</string>
-    <string name="phone_number_example_profile_2">+375 11 234-56-78</string>
-    <string name="email_example_profile">suharnica@gmail.by</string>
+    <string name="street_example_profile_1">ул. Инвизибильная 24\n
+        ул. Нескажу 121\n
+        просп. Невидимого 148/3</string>
+    <!-- <string name="street_example_profile_2">ул. Нескажу 121</string>
+    <string name="street_example_profile_3">просп. Невидимого 148/3</string>-->
+     <string name="phone_number_example_profile_1">+375 01 234-56-78\n
+         +375 11 234-56-78\n
+         suharnica@gmail.by</string>
+    <!--<string name="phone_number_example_profile_2">+375 11 234-56-78</string>
+    <string name="email_example_profile">suharnica@gmail.by</string>-->
 
 
     <!-- catalog screen -->
