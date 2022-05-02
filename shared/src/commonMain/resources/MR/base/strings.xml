@@ -29,11 +29,13 @@
     <string name="address_example">Minsk, ForExample Street, 1</string>
     <string name="number_count_example">23</string>
     <string name="street_example_profile_1">Invisible street, 24</string>
-    <string name="street_example_profile_2">Iwon\'ttell street, 121</string>
-    <string name="street_example_profile_3">Invisible avenue, 148/3</string>
-    <string name="phone_number_example_profile_1">+375 01 234-56-78</string>
-    <string name="phone_number_example_profile_2">+375 11 234-56-78</string>
-    <string name="email_example_profile">suharnica@gmail.by</string>
+    <!--<string name="street_example_profile_2">Iwon\'ttell street, 121</string>
+    <string name="street_example_profile_3">Invisible avenue, 148/3</string> -->
+    <string name="phone_number_example_profile_1">+375 01 234-56-78\n
+        +375 11 234-56-78\n
+        suharnica@gmail.by</string>
+    <!--<string name="phone_number_example_profile_2">+375 11 234-56-78</string>
+    <string name="email_example_profile">suharnica@gmail.by</string>-->
 
     <!-- catalog screen -->
     <string name="price">Price</string>
