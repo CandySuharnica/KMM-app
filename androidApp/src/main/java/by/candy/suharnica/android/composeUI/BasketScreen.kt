@@ -1,8 +1,7 @@
 package by.candy.suharnica.android.composeUI
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -30,7 +30,10 @@ import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.cache.databases.OnBasketMode
 import coil.compose.SubcomposeAsyncImage
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterialApi::class)
@@ -129,8 +132,10 @@ fun BasketScreen(viewModel: MainViewModel) {
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
+    val coroutineScope = rememberCoroutineScope()
     Column {
         Row(
             modifier = Modifier
@@ -189,15 +194,22 @@ fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
                         .align(Alignment.BottomEnd),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = {
-                        viewModel.addItemIntoBasket(
-                            item.id,
-                            OnBasketMode.REMOVE
-                        )
-                    }) {
+                    IconButton(
+                        onClick = {}
+                    ){
                         Image(
                             painter = painterResource(id = Icons.Minus.image),
-                            contentDescription = stringResource(id = Icons.Minus.description.resourceId)
+                            contentDescription = stringResource(id = Icons.Minus.description.resourceId),
+                            modifier = Modifier.combinedClickable(
+                                enabled = true,
+                                onClick = {
+                                    viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)},
+                                onLongClick = {
+                                    coroutineScope.launch {
+                                    viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)
+                                        delay(1000)
+                                    }
+                                })
                         )
                     }
                     Text(
