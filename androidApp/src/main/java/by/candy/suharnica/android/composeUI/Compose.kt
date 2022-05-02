@@ -42,6 +42,8 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
     )
     val basketItems = viewModel.getBasket.collectAsState(initial = listOf()).value
     val totalCount = basketItems.sumOf { it.count }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     BottomNavigation(
         backgroundColor = Color.White,
         contentColor = Color.Black
@@ -49,14 +51,14 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
         items.forEach { item ->
             BottomNavigationItem(
                 selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
-                selected = true,
+                unselectedContentColor = Color.Gray,
+                selected = currentRoute == item.route,
                 icon = {
                     if (item.icon == Icons.Basket)
                         Box(contentAlignment = Alignment.Center) {
                             Icon(
                                 painter = painterResource(id = item.icon.image),
-                                contentDescription = stringResource(id = item.icon.description.resourceId)
+                                contentDescription = stringResource(id = item.icon.description.resourceId),
                             )
                             Text(
                                 modifier = Modifier.padding(top = 2.dp),
@@ -70,7 +72,7 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
                     else
                         Icon(
                             painter = painterResource(id = item.icon!!.image),
-                            contentDescription = stringResource(id = item.icon.description.resourceId)
+                            contentDescription = stringResource(id = item.icon.description.resourceId),
                         )
                 },
                 onClick = {
@@ -100,27 +102,8 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
 }
 
 @Composable
-fun ProfileScreen1() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            //.background(colorResource(id = R.color.grey))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Profile",
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            //modifier = Modifier.fillMaxSize(),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
-        //Profile()
-    }
-}
-
-@Composable
 fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
+    val user = viewModel.userFlow.collectAsState(null).value
     NavHost(navController, startDestination = NavGraph.Catalog.route) {
         composable(NavGraph.Catalog.route) {
             CatalogScreen(viewModel, navController)
@@ -129,7 +112,13 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             BasketScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
-            Profile(viewModel)
+
+            if (user != null) {
+                Profile(user)
+            } else LogInAndSignUpScreen(viewModel)
+        }
+        composable(NavGraph.LogInAndSignUpScreen.route) {
+            LogInAndSignUpScreen(viewModel)
         }
         composable(
             "${NavGraph.DetailScreen.route}/itemId={itemId}",
