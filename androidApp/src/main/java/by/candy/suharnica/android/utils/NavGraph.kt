@@ -1,6 +1,7 @@
 package by.candy.suharnica.android.utils
 
 import by.candy.suharnica.MR
+import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.R
 
 sealed class NavGraph(
@@ -25,6 +26,11 @@ sealed class NavGraph(
     object DetailScreen : NavGraph(
         null,
         "detail"
+    )
+
+    object LogInAndSignUpScreen : NavGraph(
+        null,
+        "loginAndSignUp"
     )
 
 }

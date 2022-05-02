@@ -21,6 +21,8 @@
     <string name="my_orders_profile">Мои заказы</string>
     <string name="our_bakeries_profile">Наши пекарни</string>
     <string name="support_profile">Поддержка</string>
+
+
     <!-- profile screen examples -->
     <string name="full_name_example">Имян Фамильев</string>
     <string name="phone_number_example">+375 xx xxx-xx-xx</string>
@@ -48,6 +50,18 @@
     <string name="composition">Состав:</string>
     <string name="nutrition_facts">Пищевая ценность(100г):</string>
     <string name="add_to_basket">Добавить в корзину</string>
+
+
+    <!-- LogIn or SignUp screen -->
+    <string name="syharnica">Сухарница</string>
+    <string name="login">Воход</string>
+    <string name="log_in">Войти</string>
+    <string name="signup">Регистрация</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="password">пароль</string>
+    <string name="new_to_syharnica">Впервые в сухарнице? Зарегистрироваться</string>
+    <string name="already_in_syharnica">Уже есть аккаунт? Войти</string>
 
 
 </resources>

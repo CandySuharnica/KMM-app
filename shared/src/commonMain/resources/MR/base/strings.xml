@@ -21,6 +21,8 @@
     <string name="my_orders_profile">My orders</string>
     <string name="our_bakeries_profile">Our bakeries</string>
     <string name="support_profile">Support</string>
+
+
     <!-- profile screen examples -->
     <string name="full_name_example">Imyan Familiev</string>
     <string name="phone_number_example">+375 xx xxx-xx-xx</string>
@@ -47,6 +49,18 @@
     <string name="composition">Composition:</string>
     <string name="nutrition_facts">Nutrition Facts(100g):</string>
     <string name="add_to_basket">Add to Basket</string>
+
+    <!-- LogIn or SignUp screen -->
+    <string name="syharnica">Syharnica</string>
+    <string name="login">Login</string>
+    <string name="log_in">lOG IN</string>
+    <string name="signup">Sign Up</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="new_to_syharnica">New to Suharnica? SIGN UP</string>
+    <string name="already_in_syharnica">Already in Suharnica? LOG IN</string>
+
 
 
 </resources>
