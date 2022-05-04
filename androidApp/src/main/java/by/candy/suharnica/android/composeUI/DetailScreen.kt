@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
+import by.candy.suharnica.android.composeUI.common.RedButton
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.cache.databases.OnBasketMode
@@ -68,7 +69,7 @@ fun DetailScreen(viewModel: MainViewModel, navController: NavController, itemId:
                     }
                     IconButton(
                         modifier = Modifier.align(Alignment.TopStart),
-                        onClick = { navController.navigateUp()}) {
+                        onClick = { navController.navigateUp() }) {
                         Image(
                             painter = painterResource(id = Icons.ArrowBack.image),
                             contentDescription = stringResource(id = Icons.ArrowBack.description.resourceId)
@@ -177,97 +178,27 @@ fun DetailScreen(viewModel: MainViewModel, navController: NavController, itemId:
             }
         }
         if (count == 0)
-            Card(
+            RedButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
                     .align(Alignment.BottomCenter),
-                backgroundColor = Colors.RedButton.color,
-                border = BorderStroke(2.dp, color = Color.Black),
-                shape = RoundedCornerShape(8.dp),
-                onClick = { viewModel.addItemIntoBasket(itemId, OnBasketMode.ADD) }
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .align(Alignment.CenterStart),
-                        text = stringResource(id = MR.strings.add_to_basket.resourceId),
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .padding(end = 15.dp)
-                            .align(Alignment.CenterEnd),
-                        painter = painterResource(id = Icons.BigPlus.image),
-                        contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
-                    )
-                }
-
-            }
+                text = stringResource(id = MR.strings.add_to_basket.resourceId),
+                onClickButton = {viewModel.addItemIntoBasket(itemId, OnBasketMode.ADD)},
+                icon = Icons.BigPlus
+            )
         else
-            Card(
+            RedButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
                     .align(Alignment.BottomCenter),
-                border = BorderStroke(2.dp, color = Color.Black),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .align(Alignment.CenterStart),
-                        text = stringResource(id = MR.strings.add_to_basket.resourceId),
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Row(
-                        modifier = Modifier
-                            .padding(end = 25.dp)
-                            .align(Alignment.CenterEnd),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = {
-                            viewModel.addItemIntoBasket(
-                                itemId,
-                                OnBasketMode.REMOVE
-                            )
-                        }) {
-                            Image(
-                                painter = painterResource(id = Icons.Minus.image),
-                                contentDescription = stringResource(id = Icons.Minus.description.resourceId)
-                            )
-                        }
-                        Text(
-                            modifier = Modifier.widthIn(min = 25.dp),
-                            textAlign = TextAlign.Center,
-                            text = "$count",
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Colors.RedButton.color
-                        )
-                        IconButton(onClick = {
-                            viewModel.addItemIntoBasket(
-                                itemId,
-                                OnBasketMode.ADD
-                            )
-                        }) {
-                            Image(
-                                painter = painterResource(id = Icons.BigPlus.image),
-                                contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
-                            )
-                        }
-                    }
-                }
-            }
-
+                text = stringResource(id = MR.strings.add_to_basket.resourceId),
+                count = count,
+                backgroundColor = Color.White,
+                onClickIconAdd = { viewModel.addItemIntoBasket(itemId, OnBasketMode.ADD) },
+                onClickIconRemove = { viewModel.addItemIntoBasket(itemId, OnBasketMode.REMOVE) }
+            )
     }
 }
 

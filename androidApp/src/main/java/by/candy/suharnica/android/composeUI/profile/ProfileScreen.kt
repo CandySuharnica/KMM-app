@@ -22,13 +22,13 @@ import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Icons
 import com.google.firebase.auth.FirebaseUser
+import sqldelight.User
 
 
 @Composable
 
-fun Profile(viewModel: MainViewModel){
-    val orderItems = viewModel.getBasket
-        .collectAsState(initial = listOf()).value
+fun Profile(user: User){
+    //val orderItems = viewModel.getBasket.collectAsState(initial = listOf()).value
     Column {
         topBar()
         topCard()

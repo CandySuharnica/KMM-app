@@ -1,12 +1,12 @@
 package by.candy.suharnica.android
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.candy.suharnica.CandySDK
 import by.candy.suharnica.cache.databases.OnBasketMode
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,8 @@ import sqldelight.ResponseItemFromId
 typealias BasketItem = ResponseItemFromId
 
 class MainViewModel(
-    private val candySdk: CandySDK
+    private val candySdk: CandySDK,
+    val createCheck: (Uri)->Unit
 ) : ViewModel() {
 
     val errorHandler = MutableSharedFlow<String>()
@@ -50,7 +51,7 @@ class MainViewModel(
     val getTypes = candySdk.getTypes()
 
 
-    val userFlow = MutableSharedFlow<FirebaseUser>()
+    val userFlow = candySdk.getUser()
 
 
     fun login(email: String, password: String) {
@@ -59,7 +60,7 @@ class MainViewModel(
                 .addOnCompleteListener { result ->
                     viewModelScope.launch {
                         if (result.isSuccessful) {
-                            firebaseAuth.currentUser?.let { userFlow.emit(it) }
+                            firebaseAuth.currentUser?.let { candySdk.addUser(it.toString()) }
                         } else errorHandler.emit(result.exception?.localizedMessage ?: "some error")
                     }
                 }
@@ -75,7 +76,7 @@ class MainViewModel(
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 viewModelScope.launch {
                     if (it.isSuccessful) {
-                        firebaseAuth.currentUser?.let { userFlow.emit(it) }
+                        firebaseAuth.currentUser?.let { candySdk.addUser(it.toString()) }
                     } else errorHandler.emit(it.exception?.localizedMessage ?: "some error")
                 }
             }
@@ -86,14 +87,10 @@ class MainViewModel(
         }
     }
 
-    fun logout() = firebaseAuth.signOut()
 
-    fun currentUser() = firebaseAuth.currentUser
-
-
-    class Factory(private val candySdk: CandySDK) : ViewModelProvider.Factory {
+    class Factory(private val candySdk: CandySDK, private val createCheck: (Uri)->Unit) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(candySdk) as T
+            return MainViewModel(candySdk,createCheck) as T
         }
     }
 }

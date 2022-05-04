@@ -27,5 +27,6 @@ class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     val catalogDatabase = CatalogDatabase(database)
     val basketDatabase = BasketDatabase(database)
+    val userDatabase = UserDatabase(database)
 
 }
