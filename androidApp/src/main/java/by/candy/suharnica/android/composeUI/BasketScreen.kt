@@ -1,42 +1,26 @@
 package by.candy.suharnica.android.composeUI
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.candy.suharnica.MR
-import by.candy.suharnica.android.BasketItem
 import by.candy.suharnica.android.MainViewModel
-import by.candy.suharnica.android.utils.Colors
+import by.candy.suharnica.android.composeUI.common.RedButton
+import by.candy.suharnica.android.composeUI.items.BasketItem
 import by.candy.suharnica.android.utils.Icons
-import by.candy.suharnica.cache.databases.OnBasketMode
-import coil.compose.SubcomposeAsyncImage
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterialApi::class)
@@ -94,145 +78,18 @@ fun BasketScreen(viewModel: MainViewModel) {
             }
 
         }
-        Card(
+        RedButton(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
-                .align(Alignment.BottomCenter),
-            backgroundColor = Colors.RedButton.color,
-            border = BorderStroke(2.dp, color = Color.Black),
-            shape = RoundedCornerShape(8.dp),
-            onClick = {
-                viewModel.createCheck(Uri.parse("content://documents"))
+            .fillMaxWidth()
+            .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
+            .align(Alignment.BottomCenter),
+            text = stringResource(id = MR.strings.place_an_order.resourceId),
+            price = totalPrice,
+            weight = totalWeight,
+            onClickButton = {
+                TODO("there will pdf functionality")
             }
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 15.dp, top = 10.dp, bottom = 10.dp),
-                    text = stringResource(id = MR.strings.place_an_order.resourceId),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Normal
-                )
-                Column(
-                    modifier = Modifier
-                        .padding(end = 15.dp)
-                        .align(Alignment.CenterEnd)
-                ) {
-                    Text(
-                        text = "$totalPrice BYN",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        modifier = Modifier.align(Alignment.End),
-                        text = "$totalWeight г"
-                    )
-                }
-            }
-        }
+        )
     }
 
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier
-                    .size(90.dp)
-                    .drawBehind {
-                        drawLine(
-                            color = Color.Black,
-                            Offset(size.width, 0f),
-                            Offset(size.width, size.height),
-                            10f
-                        )
-                    },
-                model = item.imgUrl[0],
-                loading = {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                },
-                contentDescription = null,
-                contentScale = ContentScale.Crop
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-                    .padding(start = 14.dp)
-            ) {
-                Column() {
-                    Text(
-                        text = item.label,
-                        fontWeight = FontWeight.Black,
-                        fontSize = 22.sp,
-                        maxLines = 1
-                    )
-                    Text(
-                        text = item.priceSale.toString().plus(" BYN"),
-                        fontSize = 16.sp
-                    )
-                    Text(
-                        text = item.weight.toString().plus(" г"),
-                        color = Color.Gray,
-                        fontSize = 12.sp
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(
-                        onClick = { viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE) }
-                    ) {
-                        Image(
-                            /* modifier = Modifier.pointerInput(Unit) {
-                                 detectTapGestures(onLongPress = {
-                                     viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)
-                                 })
-                             },*/
-                            painter = painterResource(id = Icons.Minus.image),
-                            contentDescription = stringResource(id = Icons.Minus.description.resourceId),
-                        )
-                    }
-                    Text(
-                        modifier = Modifier.widthIn(min = 25.dp),
-                        textAlign = TextAlign.Center,
-                        text = "${item.count}",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Colors.RedButton.color
-                    )
-                    IconButton(onClick = {
-                        viewModel.addItemIntoBasket(
-                            item.id,
-                            OnBasketMode.ADD
-                        )
-                    }) {
-                        Image(
-                            painter = painterResource(id = Icons.BigPlus.image),
-                            contentDescription = stringResource(id = Icons.BigPlus.description.resourceId)
-                        )
-                    }
-                }
-            }
-
-        }
-        Divider(thickness = 2.dp, color = Color.Black)
-    }
 }
