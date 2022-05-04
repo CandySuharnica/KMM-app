@@ -29,7 +29,9 @@ fun RedButton(
     backgroundColor: Color = Colors.RedButton.color,
     count: Int? = null,
     textAlign: Alignment = Alignment.CenterStart,
-    icon: Icons? = null
+    icon: Icons? = null,
+    price: Double? = null,
+    weight: Int? = null
 ) {
     if (onClickButton != null)
         Card(
@@ -45,7 +47,9 @@ fun RedButton(
                 text = text,
                 count = count,
                 textAlign = textAlign,
-                icon = icon
+                icon = icon,
+                price = price,
+                weight = weight
             )
         }
     else
@@ -61,7 +65,9 @@ fun RedButton(
                 text = text,
                 count = count,
                 textAlign = textAlign,
-                icon = icon
+                icon = icon,
+                price = price,
+                weight = weight
             )
         }
 }
@@ -73,7 +79,9 @@ fun RedButtonInsideImpl(
     text: String?,
     count: Int?,
     textAlign: Alignment,
-    icon: Icons?
+    icon: Icons?,
+    price: Double?,
+    weight: Int?
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -93,6 +101,22 @@ fun RedButtonInsideImpl(
                 .align(Alignment.CenterEnd),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Column(
+            ) {
+                if (price != null)
+                    Text(
+                        text = "$price BYN",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                if (weight != null)
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(bottom = 2.dp),
+                        text = "$weight г"
+                    )
+            }
             if (icon != null)
                 Icon(
                     painter = painterResource(id = icon.image),
