@@ -77,27 +77,31 @@ fun CatalogItem(
             Row(modifier = Modifier.padding(start = 10.dp)) {
                 Text(
                     modifier = Modifier
-                        .background(Colors.RedSale.color)
+                        .background(
+                            if (item.price != item.priceSale) Colors.RedSale.color
+                            else Color.White
+                        )
                         .padding(horizontal = 2.dp),
-                    text = "${item.price} BYN",
+                    text = "${item.priceSale} BYN",
                     fontWeight = FontWeight.Black,
                     fontSize = 22.sp
                 )
-                Text(
-                    modifier = Modifier
-                        .padding(6.dp)
-                        .drawBehind {
-                            drawLine(
-                                Color.Gray,
-                                Offset(0f, size.height / 1.7f),
-                                Offset(size.width, size.height / 1.7f),
-                                2f
-                            )
-                        },
-                    fontSize = 16.sp,
-                    text = "${item.priceSale}",
-                    color = Color.Gray
-                )
+                if (item.price != item.priceSale)
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 6.dp, top = 2.dp)
+                            .drawBehind {
+                                drawLine(
+                                    Color.Gray,
+                                    Offset(0f, size.height / 1.7f),
+                                    Offset(size.width, size.height / 1.7f),
+                                    2f
+                                )
+                            },
+                        fontSize = 16.sp,
+                        text = "${item.price}",
+                        color = Color.Gray
+                    )
             }
 
             Text(

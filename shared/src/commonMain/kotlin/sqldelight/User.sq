@@ -1,8 +1,10 @@
+import kotlin.collections.List;
+
 
 CREATE TABLE User (
-    name Text,
-    avatar Text,
-    likes Integer AS Int
+    name TEXT,
+    avatar TEXT,
+    likes TEXT AS List<Int>
 );
 
 --updateItem:
