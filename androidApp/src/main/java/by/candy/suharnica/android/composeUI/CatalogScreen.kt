@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import by.candy.suharnica.android.MainViewModel
+import by.candy.suharnica.android.composeUI.common.SearchBar
+import by.candy.suharnica.android.composeUI.common.SortBar
 import by.candy.suharnica.android.composeUI.items.CatalogItem
 
 
@@ -21,14 +23,24 @@ import by.candy.suharnica.android.composeUI.items.CatalogItem
 @Composable
 fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
     val sortFlow = viewModel.sortFlow.collectAsState().value
+    val initialList = listOf("Все", "Любимое")
+    val sortTypes = viewModel.getTypes.collectAsState(initial = listOf()).value
+    val finalListTypes = initialList + sortTypes
     val searchFlow = viewModel.searchFlow.collectAsState().value
     val catalogItems = viewModel.catalogList(sortFlow, searchFlow)
         .collectAsState(initial = listOf()).value
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchBar(viewModel)
-        SortBar(viewModel = viewModel)
+        SearchBar(text = searchFlow){
+            viewModel.searchFlow.value = it
+        }
+        SortBar(
+            content = finalListTypes,
+            sortMode = sortFlow,
+        ) {
+            viewModel.sortFlow.value = it
+        }
         Box() {
             LazyVerticalGrid(
                 modifier = Modifier.padding(bottom = 59.dp),
