@@ -1,0 +1,21 @@
+
+CREATE TABLE User (
+    name Text,
+    avatar Text,
+    likes Integer AS Int
+);
+
+--updateItem:
+--UPDATE User
+--SET count = :count
+--WHERE itemId = :itemId;
+
+removeUser:
+DELETE FROM User;
+
+addUser:
+INSERT INTO User(name)
+VALUES (:name);
+
+getUser:
+SELECT * FROM User;

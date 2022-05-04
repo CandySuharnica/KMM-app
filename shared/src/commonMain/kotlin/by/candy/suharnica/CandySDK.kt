@@ -45,6 +45,12 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
 
     fun getTypes() = database.catalogDatabase.getTypes()
 
+    fun addUser(name:String) = database.userDatabase.addUser(name)
+
+    fun getUser() = database.userDatabase.getUser()
+
+    fun removeUser() = database.userDatabase.removeUser()
+
     /*fun getTotalCount() = database.basketDatabase.getTotalCount()
     fun getTotalPrice() = database.basketDatabase.getTotalPrice()
     fun getTotalWeight() = database.basketDatabase.getTotalWeight()*/

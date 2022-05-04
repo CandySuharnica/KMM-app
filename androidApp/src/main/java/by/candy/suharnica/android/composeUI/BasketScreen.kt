@@ -1,7 +1,9 @@
 package by.candy.suharnica.android.composeUI
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -99,7 +102,9 @@ fun BasketScreen(viewModel: MainViewModel) {
             backgroundColor = Colors.RedButton.color,
             border = BorderStroke(2.dp, color = Color.Black),
             shape = RoundedCornerShape(8.dp),
-            onClick = { }
+            onClick = {
+                viewModel.createCheck(Uri.parse("content://documents"))
+            }
         ) {
             Box(
                 modifier = Modifier
@@ -135,7 +140,6 @@ fun BasketScreen(viewModel: MainViewModel) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
-    val coroutineScope = rememberCoroutineScope()
     Column {
         Row(
             modifier = Modifier
@@ -178,7 +182,6 @@ fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
                         fontSize = 22.sp,
                         maxLines = 1
                     )
-
                     Text(
                         text = item.priceSale.toString().plus(" BYN"),
                         fontSize = 16.sp
@@ -195,21 +198,16 @@ fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
-                        onClick = {}
-                    ){
+                        onClick = { viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE) }
+                    ) {
                         Image(
+                            /* modifier = Modifier.pointerInput(Unit) {
+                                 detectTapGestures(onLongPress = {
+                                     viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)
+                                 })
+                             },*/
                             painter = painterResource(id = Icons.Minus.image),
                             contentDescription = stringResource(id = Icons.Minus.description.resourceId),
-                            modifier = Modifier.combinedClickable(
-                                enabled = true,
-                                onClick = {
-                                    viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)},
-                                onLongClick = {
-                                    coroutineScope.launch {
-                                    viewModel.addItemIntoBasket(item.id, OnBasketMode.REMOVE)
-                                        delay(1000)
-                                    }
-                                })
                         )
                     }
                     Text(
