@@ -17,6 +17,8 @@ import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.SearchBar
 import by.candy.suharnica.android.composeUI.common.SortBar
 import by.candy.suharnica.android.composeUI.items.CatalogItem
+import by.candy.suharnica.android.utils.NavGraph
+import by.candy.suharnica.cache.databases.OnBasketMode
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -32,7 +34,7 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchBar(text = searchFlow){
+        SearchBar(text = searchFlow) {
             viewModel.searchFlow.value = it
         }
         SortBar(
@@ -49,7 +51,22 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                 items(
                     items = catalogItems,
                     itemContent = {
-                        CatalogItem(item = it, navController, viewModel)
+                        CatalogItem(
+                            item = it,
+                            count = viewModel.getItemCountInBasket(it.id)
+                                .collectAsState(initial = 0).value,
+                            onClickAddItem = {
+                                viewModel.addItemIntoBasket(
+                                    it.id,
+                                    OnBasketMode.ADD
+                                )
+                            },
+                            onClickItem = {
+                                navController.navigate("${NavGraph.DetailScreen.route}/itemId=${it.id}")
+                            },
+                            onClickLike = {
+
+                            })
                     }
                 )
             }
