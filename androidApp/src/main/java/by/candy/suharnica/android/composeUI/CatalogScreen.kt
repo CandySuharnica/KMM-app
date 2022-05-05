@@ -19,6 +19,7 @@ import by.candy.suharnica.android.composeUI.common.SortBar
 import by.candy.suharnica.android.composeUI.items.CatalogItem
 import by.candy.suharnica.android.utils.NavGraph
 import by.candy.suharnica.cache.databases.OnBasketMode
+import sqldelight.GetLikes
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -31,6 +32,8 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
     val searchFlow = viewModel.searchFlow.collectAsState().value
     val catalogItems = viewModel.catalogList(sortFlow, searchFlow)
         .collectAsState(initial = listOf()).value
+    val listOfLikes =
+        viewModel.listOfLikes.collectAsState(initial = GetLikes(listOf())).value?.likes ?: listOf()
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -55,6 +58,7 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                             item = it,
                             count = viewModel.getItemCountInBasket(it.id)
                                 .collectAsState(initial = 0).value,
+                            liked = listOfLikes.contains(it.id),
                             onClickAddItem = {
                                 viewModel.addItemIntoBasket(
                                     it.id,
@@ -65,7 +69,7 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                                 navController.navigate("${NavGraph.DetailScreen.route}/itemId=${it.id}")
                             },
                             onClickLike = {
-
+                                viewModel.like(it.id)
                             })
                     }
                 )

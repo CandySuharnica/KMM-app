@@ -30,7 +30,12 @@ import coil.compose.SubcomposeAsyncImage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BasketItem(item: BasketItem, viewModel: MainViewModel) {
+fun BasketItem(
+    item: BasketItem,
+    onClickAdd: () -> Unit,
+    onClickRemove: () -> Unit,
+    viewModel: MainViewModel
+) {
     Column {
         Row(
             modifier = Modifier

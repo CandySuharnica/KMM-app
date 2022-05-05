@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.candy.suharnica.android.utils.Colors
@@ -27,9 +28,10 @@ import coil.compose.SubcomposeAsyncImage
 fun CatalogItem(
     item: CatalogItem,
     count: Int = 0,
-    onClickItem: () -> Unit,
-    onClickAddItem: () -> Unit,
-    onClickLike: () -> Unit
+    liked: Boolean? = null,
+    onClickItem: (() -> Unit)? = null,
+    onClickAddItem: (() -> Unit)? = null,
+    onClickLike: (() -> Unit)? = null
 ) {
     Box(modifier = Modifier
         .drawBehind {
@@ -48,7 +50,8 @@ fun CatalogItem(
         }
         .padding(2.dp)
         .clickable(
-            onClick = onClickItem
+            enabled = onClickItem != null,
+            onClick = onClickItem ?: {}
         )
     ) {
         Column() {
@@ -96,10 +99,12 @@ fun CatalogItem(
                     )
             }
             Text(
-                modifier = Modifier.padding(start = 10.dp),
+                modifier = Modifier.padding(start = 10.dp).
+                widthIn(max = 135.dp),
                 text = item.label,
                 fontSize = 16.sp,
-                maxLines = 1
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 modifier = Modifier.padding(start = 10.dp, bottom = 11.dp),
@@ -108,41 +113,46 @@ fun CatalogItem(
                 fontSize = 12.sp
             )
         }
-        Row(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(start = 16.dp, top = 11.dp)
-                .clickable { onClickLike() }
-        ) {
-            Icon(
-                painter = painterResource(id = Icons.Smile.image),
-                contentDescription = stringResource(id = Icons.Smile.description.resourceId),
-                tint = Color.Gray
-            )
-            Text(
-                modifier = Modifier.padding(start = 4.dp),
-                text = item.likes.toString(),
-                color = Color.Gray
-            )
-        }
-        IconButton(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(11.dp),
-            onClick = onClickAddItem
-        ) {
-            Image(
-                painter = painterResource(id = Icons.Basket.image),
-                contentDescription = stringResource(id = Icons.Basket.description.resourceId)
-            )
-            Text(
+        if (liked != null)
+            Row(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 4.dp),
-                text = if (count == 0) "" else "$count",
-                fontWeight = FontWeight.Medium,
-                color = Color.Gray
-            )
-        }
+                    .align(Alignment.TopStart)
+                    .padding(start = 16.dp, top = 11.dp)
+                    .clickable(
+                        enabled = onClickLike != null,
+                        onClick = onClickLike ?: {}
+                    )
+            ) {
+                Icon(
+                    painter = painterResource(id = Icons.Smile.image),
+                    contentDescription = stringResource(id = Icons.Smile.description.resourceId),
+                    tint = if (liked) Colors.RedButton.color else Color.Gray
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = item.likes.toString(),
+                    color = if (liked) Colors.RedButton.color else Color.Gray
+                )
+            }
+        if (onClickAddItem != null)
+            IconButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(11.dp),
+                onClick = onClickAddItem
+            ) {
+                Image(
+                    painter = painterResource(id = Icons.Basket.image),
+                    contentDescription = stringResource(id = Icons.Basket.description.resourceId)
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 4.dp),
+                    text = if (count == 0) "" else "$count",
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Gray
+                )
+            }
     }
 }

@@ -13,8 +13,17 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
 
     @Throws(Exception::class)
     fun getCatalogList(type: String, sort: String): Flow<List<CatalogItem>> {
-
         return flow {
+            if (type == "Любимое"){
+                val listOfLikes = getLikes().first()?.likes ?: emptyList()
+                val listCatalogItems = buildList {
+                    listOfLikes.forEach {
+                        add(getItemFromId(it))
+                    }
+                }
+                emit(listCatalogItems)
+            }
+            else{
             val cachedLaunches =
                 database.catalogDatabase.getAllItems(type = if (type == "Все") "%"
                                                     else type,
@@ -29,7 +38,7 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
             else database.catalogDatabase.fillDB(items = catalogItems)
 
             emit(cachedLaunches)
-        }
+        }}
 
     }
 
@@ -50,6 +59,9 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
     fun getUser() = database.userDatabase.getUser()
 
     fun removeUser() = database.userDatabase.removeUser()
+
+    fun getLikes() = database.userDatabase.getLikes()
+    fun like(itemId: Long) = database.userDatabase.like(itemId)
 
     /*fun getTotalCount() = database.basketDatabase.getTotalCount()
     fun getTotalPrice() = database.basketDatabase.getTotalPrice()

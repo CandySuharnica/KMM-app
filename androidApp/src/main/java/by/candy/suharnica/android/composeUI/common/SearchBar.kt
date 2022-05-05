@@ -64,13 +64,13 @@ fun SearchBar(
 
                 }
             }
-            Icon(
+            /*Icon(
                 modifier = Modifier
                     .padding(start = 14.dp)
                     .size(40.dp),
                 painter = painterResource(id = Icons.Sort.image),
                 contentDescription = stringResource(id = Icons.Sort.description.resourceId)
-            )
+            )*/
         }
         Divider(color = Color.Black, thickness = 2.dp)
     }
