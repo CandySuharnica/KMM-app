@@ -75,6 +75,11 @@ sealed class Icons(
         R.drawable.ic_minus
     )
 
+    object SmallMinus : Icons(
+        MR.strings.minus,
+        R.drawable.ic_small_minus
+    )
+
     object Label : Icons(
         MR.strings.syharnica,
         R.drawable.ic_lable

@@ -1,6 +1,5 @@
 package by.candy.suharnica.android
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -16,9 +15,8 @@ import sqldelight.ResponseItemFromId
 typealias BasketItem = ResponseItemFromId
 
 class MainViewModel(
-    private val candySdk: CandySDK,
-    val createCheck: (Uri)->Unit
-) : ViewModel() {
+    private val candySdk: CandySDK
+    ) : ViewModel() {
 
     val errorHandler = MutableSharedFlow<String>()
 
@@ -52,6 +50,9 @@ class MainViewModel(
 
 
     val userFlow = candySdk.getUser()
+
+    val listOfLikes = candySdk.getLikes()
+    fun like(itemId:Long) = candySdk.like(itemId)
 
 
     fun login(email: String, password: String) {
@@ -88,9 +89,9 @@ class MainViewModel(
     }
 
 
-    class Factory(private val candySdk: CandySDK, private val createCheck: (Uri)->Unit) : ViewModelProvider.Factory {
+    class Factory(private val candySdk: CandySDK) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(candySdk,createCheck) as T
+            return MainViewModel(candySdk) as T
         }
     }
 }

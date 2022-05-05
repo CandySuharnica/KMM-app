@@ -33,27 +33,27 @@ fun BasketScreen(viewModel: MainViewModel) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column() {
             Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(
+                /*IconButton(
                     modifier = Modifier.align(Alignment.CenterStart),
-                    onClick = { /*TODO*/ }) {
+                    onClick = { *//*TODO*//* }) {
                     Image(
                         painter = painterResource(id = Icons.ArrowBack.image),
                         contentDescription = stringResource(id = Icons.ArrowBack.description.resourceId)
                     )
-                }
+                }*/
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = stringResource(id = MR.strings.basket.resourceId),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Text(
+                /*Text(
                     modifier = Modifier
                         .padding(end = 8.dp)
                         .align(Alignment.CenterEnd),
                     text = stringResource(id = MR.strings.choose.resourceId),
                     fontSize = 18.sp,
-                )
+                )*/
             }
             Divider(
                 thickness = 2.dp,
@@ -66,7 +66,15 @@ fun BasketScreen(viewModel: MainViewModel) {
                 ) {
                     items(items = basketItems,
                         itemContent = { item ->
-                            BasketItem(item = item, viewModel)
+                            BasketItem(
+                                item = item,
+                                onClickAdd = {
+
+                                },
+                                onClickRemove = {
+
+                                },
+                                viewModel)
                         }
                     )
                 }
@@ -76,19 +84,16 @@ fun BasketScreen(viewModel: MainViewModel) {
                     color = Color.White
                 )
             }
-
         }
         RedButton(
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
-            .align(Alignment.BottomCenter),
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
+                .align(Alignment.BottomCenter),
             text = stringResource(id = MR.strings.place_an_order.resourceId),
             price = totalPrice,
             weight = totalWeight,
-            onClickButton = {
-
-            }
+           // onClickButton = viewModel.createCheck
         )
     }
 

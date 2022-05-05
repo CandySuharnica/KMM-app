@@ -18,15 +18,15 @@ class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
         override fun encode(value: List<String>) = value.joinToString(separator = "!!")
     }
-    private val listOfIntAdapter = object : ColumnAdapter<List<Int>, String> {
-        override fun decode(databaseValue: String): List<Int> =
+    private val listOfIntAdapter = object : ColumnAdapter<List<Long>, String> {
+        override fun decode(databaseValue: String): List<Long> =
             if (databaseValue.isEmpty()) {
                 listOf()
             } else {
-                databaseValue.split("!!").map { it.toInt() }
+                databaseValue.split("!!").map { it.toLong() }
             }
 
-        override fun encode(value: List<Int>): String = value.joinToString(separator = "!!")
+        override fun encode(value: List<Long>): String = value.joinToString(separator = "!!")
     }
 
     private val database = CandyDatabase(

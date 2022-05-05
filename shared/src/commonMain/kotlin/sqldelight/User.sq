@@ -4,13 +4,8 @@ import kotlin.collections.List;
 CREATE TABLE User (
     name TEXT,
     avatar TEXT,
-    likes TEXT AS List<Int>
+    likes TEXT AS List<Long>
 );
-
---updateItem:
---UPDATE User
---SET count = :count
---WHERE itemId = :itemId;
 
 removeUser:
 DELETE FROM User;
@@ -21,3 +16,15 @@ VALUES (:name);
 
 getUser:
 SELECT * FROM User;
+
+createLikeTable:
+INSERT OR REPLACE INTO User(likes)
+VALUES (:likes);
+
+like:
+UPDATE User
+SET likes = :likes;
+
+getLikes:
+SELECT likes FROM User;
+

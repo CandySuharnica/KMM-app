@@ -60,9 +60,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.0")
     implementation(platform("com.google.firebase:firebase-bom:29.3.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    //implementation ("com.uttampanchasara.pdfgenerator:pdfgenerator:1.3")
 }

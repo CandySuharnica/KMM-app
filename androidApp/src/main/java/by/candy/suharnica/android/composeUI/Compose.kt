@@ -109,8 +109,8 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             BasketScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
-            if (user != null) {
-                Profile(user, viewModel)
+            if (user?.name != null) {
+                Profile(viewModel)
             } else LogInAndSignUpScreen(viewModel)
         }
         composable(NavGraph.LogInAndSignUpScreen.route) {
