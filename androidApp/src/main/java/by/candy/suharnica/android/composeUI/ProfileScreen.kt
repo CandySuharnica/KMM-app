@@ -4,8 +4,11 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.candy.suharnica.MR
+import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.PopupList
 import by.candy.suharnica.android.utils.Icons
 import sqldelight.User
@@ -25,26 +29,44 @@ import sqldelight.User
 
 @Composable
 
-fun Profile(user: User) {
-    //val orderItems = viewModel.getBasket.collectAsState(initial = listOf()).value
-    Column {
+fun Profile(user: User, viewModel: MainViewModel) {
+    val orderItems = viewModel.getBasket.collectAsState(initial = listOf()).value
+    val orderItemsNames: MutableList<String> = mutableListOf();
+    for (item in orderItems) {
+        orderItemsNames.add(item.label)
+    }
+    Column(Modifier.scrollable(rememberScrollState(),Orientation.Vertical)
+        .fillMaxSize()) {
         TopBar()
         TopCard()
         Spacer(modifier = Modifier.height(10.dp))
         MyFavorites()
         Spacer(modifier = Modifier.height(10.dp))
-        MyOrders()
+        //MyOrders()
+        Row(Modifier.offset(x=8.dp)){
+        Text(
+            text = stringResource(id = MR.strings.delivery_profile.resourceId),
+        )}
+        PopupList(// the same like OurBakeries()
+            label = stringResource(id = MR.strings.my_orders_profile.resourceId),
+            content = orderItemsNames
+        )
         Spacer(modifier = Modifier.height(20.dp))
         PopupList(// the same like OurBakeries()
             label = stringResource(id = MR.strings.our_bakeries_profile.resourceId),
             content = listOf(
-                stringResource(id = MR.strings.street_example_profile_1.resourceId),
-                stringResource(id = MR.strings.street_example_profile_1.resourceId),
                 stringResource(id = MR.strings.street_example_profile_1.resourceId)
             )
         )
+        Spacer(modifier = Modifier.height(2.dp))
+        PopupList(// the same like OurBakeries()
+            label = stringResource(id = MR.strings.support_profile.resourceId),
+            content = listOf(
+                stringResource(id = MR.strings.phone_number_example_profile_1.resourceId)
+            )
+        )
         //OurBakeries()
-        OurSupport()
+        //OurSupport()
     }
 }
 
@@ -188,8 +210,8 @@ fun MyFavorites() {
                 Text(
                     text = stringResource(id = MR.strings.favorite_desserts.resourceId),
                     //fontFamily = GolosFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp
                 )
                 Text(
                     text = stringResource(id = MR.strings.number_count_example.resourceId),
@@ -243,15 +265,20 @@ fun MyOrders() {
 @Composable
 fun OurBakeries() {
     var expanded by remember { mutableStateOf(false) }
-    Column {
+    Column(Modifier.scrollable(rememberScrollState(),Orientation.Vertical)) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { expanded = !expanded }) {
+                if(!expanded)
                 Icon(
                     painter = painterResource(Icons.Plus.image),
                     contentDescription = stringResource(id = MR.strings.plus.resourceId)
-                )
+                ) else
+                    Icon(
+                        painter = painterResource(Icons.Plus.image),
+                        contentDescription = stringResource(id = MR.strings.minus.resourceId)
+                    )
             }
             Text(
                 text = stringResource(id = MR.strings.our_bakeries_profile.resourceId),
@@ -278,7 +305,7 @@ fun OurBakeries() {
 
 @Composable
 fun OurSupport() {
-    val visible by remember { mutableStateOf(false) }
+    var visible by remember { mutableStateOf(false) }
     Column {
         Row(
             modifier = Modifier,
@@ -289,7 +316,7 @@ fun OurSupport() {
                 contentDescription = stringResource(id = MR.strings.plus.resourceId),
                 Modifier
                     .padding(end = 2.dp)
-                    .clickable { visible != visible }
+                    .clickable { visible = !visible }
             )
             Text(
                 text = stringResource(id = MR.strings.support_profile.resourceId),
@@ -306,4 +333,5 @@ fun OurSupport() {
             Text(text = stringResource(id = MR.strings.phone_number_example_profile_1.resourceId))
         }
     }
+
 }

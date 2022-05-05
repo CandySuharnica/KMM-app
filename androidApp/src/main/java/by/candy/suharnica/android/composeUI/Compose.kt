@@ -110,7 +110,7 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
         }
         composable(NavGraph.Profile.route) {
             if (user != null) {
-                Profile(user)
+                Profile(user, viewModel)
             } else LogInAndSignUpScreen(viewModel)
         }
         composable(NavGraph.LogInAndSignUpScreen.route) {

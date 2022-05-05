@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
             contentResolver.openFileDescriptor(uri, "w")?.use {
                 FileOutputStream(it.fileDescriptor).use {
                     it.write(
-                        ("Overwritten at ${System.currentTimeMillis()}\n")
+                        ("Hello Moto")
                             .toByteArray()
                     )
                 }

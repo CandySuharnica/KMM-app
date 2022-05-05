@@ -87,7 +87,7 @@ fun BasketScreen(viewModel: MainViewModel) {
             price = totalPrice,
             weight = totalWeight,
             onClickButton = {
-                TODO("there will pdf functionality")
+
             }
         )
     }
