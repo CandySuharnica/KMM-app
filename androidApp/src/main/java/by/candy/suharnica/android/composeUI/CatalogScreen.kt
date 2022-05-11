@@ -5,18 +5,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.SearchBar
 import by.candy.suharnica.android.composeUI.common.SortBar
 import by.candy.suharnica.android.composeUI.items.CatalogItem
+import by.candy.suharnica.android.utils.Colors
+import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
 import by.candy.suharnica.cache.databases.OnBasketMode
 import sqldelight.GetLikes
@@ -88,6 +93,20 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                     .align(Alignment.CenterEnd),
                 color = Color.White
             )
+            Box(
+                modifier = Modifier.padding(end = 16.dp, bottom = 80.dp)//Не трогать отступ - это костыль!!!
+                    .align(Alignment.BottomEnd)
+            ) {
+            IconButton(onClick = {  },
+                modifier = Modifier
+                    .then(Modifier.size(50.dp))
+                    .border(2.dp, Color.Black, shape = CircleShape)
+                    .background(color = Colors.RedButton.color,shape = CircleShape)
+            ) {
+                Icon(painter = painterResource(Icons.Plus.image),
+                    contentDescription = "Plus icon", tint = Color.Black)
+            }
+            }
         }
     }
 }
