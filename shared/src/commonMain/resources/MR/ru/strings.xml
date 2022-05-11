@@ -41,7 +41,7 @@
 
     <!-- LogIn or SignUp screen -->
     <string name="syharnica">Сухарница</string>
-    <string name="login">Воход</string>
+    <string name="login">Вход</string>
     <string name="log_in">Войти</string>
     <string name="signup">Регистрация</string>
     <string name="sign_up">Зарегистрироваться</string>
@@ -49,6 +49,17 @@
     <string name="password">пароль</string>
     <string name="new_to_syharnica">Впервые в сухарнице? Зарегистрироваться</string>
     <string name="already_in_syharnica">Уже есть аккаунт? Войти</string>
+
+    <!-- Making an Order -->
+    <string name="making_an_order_title">Оформление</string>
+    <string name="mao_name">Имя</string>
+    <string name="mao_second_name">Фамилия</string>
+    <string name="mao_mobile_number">Номер телефона</string>
+    <string name="mao_method_of_issue">Способ выдачи</string>
+    <string name="mao_delivery_by_courier">Доставка курьером</string>
+    <string name="mao_pick_up">Самовывоз</string>
+    <string name="mao_some_comments">Комментарий к заказу</string>
+    <string name="mao_address_pick_up">\tМинск, Гикало 9</string>
 
 
 </resources>

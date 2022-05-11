@@ -63,6 +63,17 @@
     <string name="new_to_syharnica">New to Suharnica? SIGN UP</string>
     <string name="already_in_syharnica">Already in Suharnica? LOG IN</string>
 
+    <!-- Making an Order -->
+    <string name="making_an_order_title">Making an order</string>
+    <string name="mao_name">First Name</string>
+    <string name="mao_second_name">Second Name</string>
+    <string name="mao_mobile_number">Mobile number</string>
+    <string name="mao_method_of_issue">Method of issue</string>
+    <string name="mao_delivery_by_courier">Delivery by courier</string>
+    <string name="mao_pick_up">Pick up</string>
+    <string name="mao_some_comments">Comment on the order</string>
+    <string name="mao_address_pick_up">\tMinsk, Gikalo 9</string>
+
 
 
 </resources>
