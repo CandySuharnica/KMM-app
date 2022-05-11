@@ -1,5 +1,12 @@
 package by.candy.suharnica.android.composeUI
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Environment
+import android.util.Log
+import android.util.TimeUtils
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,16 +15,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.RedButton
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
+import com.itextpdf.text.Document
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
+import java.io.FileOutputStream
+import java.lang.Exception
+import java.util.*
 
 @Composable
 fun MakingAnOrderScreen(viewModel: MainViewModel) {
@@ -25,19 +40,33 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
         .collectAsState(initial = listOf()).value
     val totalPrice = basketItems.sumOf { it.priceSale * it.count }
     val totalWeight = basketItems.sumOf { it.weight * it.count }
-    var pickUpStatus by remember { mutableStateOf(false)} //для определения статуса (самовывоз или доставка)
-    var courierStatus by remember { mutableStateOf(false)}//для определения статуса (самовывоз или доставка)
+    var pickUpStatus by remember { mutableStateOf(false) } //для определения статуса (самовывоз или доставка)
+    var courierStatus by remember { mutableStateOf(false) }//для определения статуса (самовывоз или доставка)
     val name = remember { mutableStateOf("") }
     val secondName = remember { mutableStateOf("") }
     val mobileNumber = remember { mutableStateOf("") }
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission Accepted: Do something
+            Log.d("ExampleScreen", "PERMISSION GRANTED")
+
+        } else {
+            // Permission Denied: Do something
+            Log.d("ExampleScreen", "PERMISSION DENIED")
+        }
+    }
     Column(modifier = Modifier.fillMaxSize()) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Text(modifier = Modifier.align(Alignment.Center),
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
                 text = stringResource(id = MR.strings.making_an_order_title.resourceId),
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold)
-            }
-            Spacer(modifier = Modifier.height(8.dp))
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Divider(
             thickness = 2.dp,
             color = Color.Black
@@ -77,38 +106,41 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                     .height(60.dp)
                     .fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor= Colors.RedButton.color, // цвет при получении фокуса
-                        focusedLabelColor = Colors.RedButton.color
-            )
+                    focusedBorderColor = Colors.RedButton.color, // цвет при получении фокуса
+                    focusedLabelColor = Colors.RedButton.color
+                )
             )
             Spacer(Modifier.height(8.dp))
 
-            Text(text = stringResource(id = MR.strings.mao_method_of_issue.resourceId),
+            Text(
+                text = stringResource(id = MR.strings.mao_method_of_issue.resourceId),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.Gray)
+                color = Color.Gray
+            )
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp),
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (!pickUpStatus) {
                     if (!courierStatus)
-                    Icon(
-                        painter = painterResource(Icons.Plus.image),
-                        contentDescription = stringResource(id = Icons.Plus.description.resourceId),
-                        Modifier
-                            .padding(end = 2.dp)
-                            .clickable { courierStatus = !courierStatus }
-                    ) else
-                    Icon(
-                        painter = painterResource(Icons.Smile.image),
-                        contentDescription = stringResource(id = Icons.SmallMinus.description.resourceId),
-                        Modifier
-                            .padding(end = 2.dp)
-                            .clickable { courierStatus = !courierStatus }
-                    )
+                        Icon(
+                            painter = painterResource(Icons.Plus.image),
+                            contentDescription = stringResource(id = Icons.Plus.description.resourceId),
+                            Modifier
+                                .padding(end = 2.dp)
+                                .clickable { courierStatus = !courierStatus }
+                        ) else
+                        Icon(
+                            painter = painterResource(Icons.Smile.image),
+                            contentDescription = stringResource(id = Icons.SmallMinus.description.resourceId),
+                            Modifier
+                                .padding(end = 2.dp)
+                                .clickable { courierStatus = !courierStatus }
+                        )
                     Text(
                         text = stringResource(id = MR.strings.mao_delivery_by_courier.resourceId),
                         fontWeight = FontWeight.Normal,
@@ -117,27 +149,29 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                 }
             }
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp),
-                verticalAlignment = Alignment.CenterVertically)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            )
             {
                 if (!courierStatus) {
                     if (!pickUpStatus)
-                    Icon(
-                        painter = painterResource(Icons.Plus.image),
-                        contentDescription = stringResource(id = Icons.Plus.description.resourceId),
-                        Modifier
-                            .padding(end = 2.dp)
-                            .clickable { pickUpStatus = !pickUpStatus }
-                    ) else
-                    Icon(
-                        painter = painterResource(Icons.Smile.image),
-                        contentDescription = stringResource(id = Icons.SmallMinus.description.resourceId),
-                        Modifier
-                            .padding(end = 2.dp)
-                            .clickable { pickUpStatus = !pickUpStatus }
-                    )
+                        Icon(
+                            painter = painterResource(Icons.Plus.image),
+                            contentDescription = stringResource(id = Icons.Plus.description.resourceId),
+                            Modifier
+                                .padding(end = 2.dp)
+                                .clickable { pickUpStatus = !pickUpStatus }
+                        ) else
+                        Icon(
+                            painter = painterResource(Icons.Smile.image),
+                            contentDescription = stringResource(id = Icons.SmallMinus.description.resourceId),
+                            Modifier
+                                .padding(end = 2.dp)
+                                .clickable { pickUpStatus = !pickUpStatus }
+                        )
                     Text(
                         text = stringResource(id = MR.strings.mao_pick_up.resourceId),
                         fontWeight = FontWeight.Normal,
@@ -149,14 +183,43 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                 }
             }
         }
+        val context = LocalContext.current
         Box(Modifier.fillMaxSize()) {
-        RedButton(modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
-            .align(Alignment.BottomCenter),
-            text = stringResource(id = MR.strings.place_an_order.resourceId),
-            price = totalPrice,
-            weight = totalWeight)
+            RedButton(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
+                .align(Alignment.BottomCenter),
+                text = stringResource(id = MR.strings.place_an_order.resourceId),
+                price = totalPrice,
+                weight = totalWeight,
+                onClickButton = {
+                    when (PackageManager.PERMISSION_GRANTED) {
+                        ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) -> {
+                            val doc = Document()
+                            val fileName = "check"// + Calendar.getInstance().time.toString().replace("\\s".toRegex(), "")
+                            val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName + ".pdf"
+                            try {
+                                PdfWriter.getInstance(doc, FileOutputStream(filePath))
+                                doc.open()
+                                val data = "bla bla bla"
+                                doc.addAuthor("admin")
+                                doc.add(Paragraph(data))
+                                doc.close()
+                                Log.d("ExampleScreen", "PERMISSION GRANTED")
+                            } catch (e: Exception) {
+
+                            }
+                        }
+                        else -> {
+                            // Asking for permission
+                            launcher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        }
+                    }
+                })
         }
+
     }
 }

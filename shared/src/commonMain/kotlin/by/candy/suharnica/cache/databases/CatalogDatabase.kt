@@ -47,6 +47,8 @@ class CatalogDatabase(database: CandyDatabase) {
 
     internal fun getItemFromId(id: Long) = dbQuery.getItemFromId(id, mapper = ::mapCatalog).executeAsOne()
 
+    internal fun remove(id: Long) = dbQuery.remove(id)
+
     internal fun getTypes() = dbQuery.getTypes().asFlow().mapToList()
 
     private fun mapCatalog(

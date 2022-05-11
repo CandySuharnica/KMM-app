@@ -27,8 +27,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             MainScreen(viewModel)
         }
-
-
         lifecycleScope.launch {
             viewModel.errorHandler.collectLatest { error ->
                 if (error != "") Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()

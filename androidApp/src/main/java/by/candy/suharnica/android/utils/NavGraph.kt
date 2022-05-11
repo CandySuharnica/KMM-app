@@ -33,4 +33,14 @@ sealed class NavGraph(
         "loginAndSignUp"
     )
 
+    object AdminScreen : NavGraph(
+        null,
+        "AdminScreen"
+    )
+
+    object MakingAnOrderScreen : NavGraph(
+        null,
+        "MakingAnOrderScreen"
+    )
+
 }

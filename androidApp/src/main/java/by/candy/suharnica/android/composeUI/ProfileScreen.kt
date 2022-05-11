@@ -38,7 +38,8 @@ fun Profile(viewModel: MainViewModel) {
     val orderItems = viewModel.getBasket.collectAsState(initial = listOf()).value
     val orderItemsNames: MutableList<String> = mutableListOf()
     val listOfLikes =
-        viewModel.listOfLikes.collectAsState(initial = GetLikes(listOf())).value?.likes ?: listOf()
+        viewModel.listOfLikes.collectAsState(initial = listOf()).value.firstNotNullOfOrNull { it }?.likes
+            ?: emptyList()
     for (item in orderItems) {
         orderItemsNames.add(item.label)
     }
@@ -60,7 +61,8 @@ fun Profile(viewModel: MainViewModel) {
                         items = listOfLikes,
                         itemContent = {
                             CatalogItem(
-                                item = viewModel.getItemFromId(it))
+                                item = viewModel.getItemFromId(it)
+                            )
                         }
                     )
                 }

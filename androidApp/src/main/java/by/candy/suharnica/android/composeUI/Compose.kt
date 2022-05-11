@@ -20,14 +20,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import by.candy.suharnica.android.BasketItem
 import by.candy.suharnica.android.MainViewModel
-import by.candy.suharnica.android.composeUI.Profile
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlin.coroutines.coroutineContext
 
 
 @Composable
@@ -100,15 +97,19 @@ fun BottomNavigationBar(navController: NavController, viewModel: MainViewModel) 
 
 @Composable
 fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
-    val user = viewModel.userFlow.collectAsState(null).value
+    val user = viewModel.userFlow.collectAsState(null).value?.singleOrNull { it.name != null }
     NavHost(navController, startDestination = NavGraph.Catalog.route) {
         composable(NavGraph.Catalog.route) {
             CatalogScreen(viewModel, navController)
         }
         composable(NavGraph.Basket.route) {
-            BasketScreen(viewModel)
-            //AdminScreen()
-            //MakingAnOrderScreen(viewModel)
+            BasketScreen(viewModel,navController)
+        }
+        composable(NavGraph.AdminScreen.route) {
+            AdminScreen(viewModel)
+        }
+        composable(NavGraph.MakingAnOrderScreen.route) {
+            MakingAnOrderScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
             if (user?.name != null) {

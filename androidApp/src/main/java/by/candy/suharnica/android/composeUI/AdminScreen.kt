@@ -11,15 +11,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Colors
+import by.candy.suharnica.entity.CatalogItem
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AdminScreen() {
+fun AdminScreen(viewModel: MainViewModel) {
     val scrollState = rememberScrollState()
     val id = remember { mutableStateOf("") }
     val label = remember { mutableStateOf("") }
@@ -34,84 +35,90 @@ fun AdminScreen() {
     val fats = remember { mutableStateOf("") }
     val protein = remember { mutableStateOf("") }
     val productComposition = remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(
-            scrollState,
-            true
-        )
-        /*.scrollable(
-            state = scrollState,
-            orientation = Orientation.Vertical
-        )*/
-        .padding(start = 8.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(
+                scrollState,
+                true
+            )
+            /*.scrollable(
+                state = scrollState,
+                orientation = Orientation.Vertical
+            )*/
+            .padding(start = 8.dp)
+    ) {
 
-    Text(text = "Добавление товара",
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold)
-    Divider(modifier = Modifier.fillMaxWidth(),
+        Text(
+            text = "Добавление товара",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = Color.Black)
-    OutlinedTextField(
-        value = id.value,
-        onValueChange = { id.value = it },
-        label = { Text(text = "Item id") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+            color = Color.Black
         )
-    )
-    OutlinedTextField(
-        value = label.value,
-        onValueChange = { label.value = it },
-        label = { Text(text = "Item label") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+        OutlinedTextField(
+            value = id.value,
+            onValueChange = { id.value = it },
+            label = { Text(text = "Item id") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
         )
-    )
-    OutlinedTextField(
-        value = type.value,
-        onValueChange = { type.value = it },
-        label = { Text(text = "Item type") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+        OutlinedTextField(
+            value = label.value,
+            onValueChange = { label.value = it },
+            label = { Text(text = "Item label") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
         )
-    )
-    OutlinedTextField(
-        value = weight.value,
-        onValueChange = { weight.value = it },
-        label = { Text(text = "Item weight") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+        OutlinedTextField(
+            value = type.value,
+            onValueChange = { type.value = it },
+            label = { Text(text = "Item type") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
         )
-    )
-    OutlinedTextField(
-        value = imgURL.value,
-        onValueChange = { imgURL.value = it },
-        label = { Text(text = "Item imgURL") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+        OutlinedTextField(
+            value = weight.value,
+            onValueChange = { weight.value = it },
+            label = { Text(text = "Item weight") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
         )
-    )
-    OutlinedTextField(
-        value = price.value,
-        onValueChange = { price.value = it },
-        label = { Text(text = "Item price") },
-        colors = outlinedTextFieldColors(
-            focusedBorderColor = Colors.RedButton.color,
-            unfocusedBorderColor = Color.Black,
-            focusedLabelColor = Color.Black
+        OutlinedTextField(
+            value = imgURL.value,
+            onValueChange = { imgURL.value = it },
+            label = { Text(text = "Item imgURL") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
         )
-    )
+        OutlinedTextField(
+            value = price.value,
+            onValueChange = { price.value = it },
+            label = { Text(text = "Item price") },
+            colors = outlinedTextFieldColors(
+                focusedBorderColor = Colors.RedButton.color,
+                unfocusedBorderColor = Color.Black,
+                focusedLabelColor = Color.Black
+            )
+        )
         OutlinedTextField(
             value = priceSale.value,
             onValueChange = { priceSale.value = it },
@@ -182,7 +189,27 @@ fun AdminScreen() {
                 focusedLabelColor = Color.Black
             )
         )
-        Button(onClick = { /**/ },
+        Button(
+            onClick = {
+                viewModel.addToCatalog(
+                    CatalogItem(
+                        id.value.toLong() ?: 0,
+                        label.value,
+                        type.value,
+                        weight.value.toInt() ?: 0,
+                        listOf(imgURL.value),
+                        price.value.toDouble() ?: 0.0,
+                        priceSale.value.toDouble() ?: 0.0,
+                        0,
+                        about.value,
+                        productComposition.value,
+                        calorie.value,
+                        carbohydrates.value,
+                        fats.value,
+                        protein.value
+                    )
+                )
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = Colors.RedButton.color)
         ) {
             Text(text = "Добавить товар")
@@ -190,10 +217,4 @@ fun AdminScreen() {
 
         Spacer(modifier = Modifier.height(80.dp))
     }
-}
-
-@Preview
-@Composable
-fun adminPreview(){
-    AdminScreen()
 }

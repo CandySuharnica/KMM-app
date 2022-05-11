@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.candy.suharnica.CandySDK
 import by.candy.suharnica.cache.databases.OnBasketMode
+import by.candy.suharnica.entity.CatalogItem
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import sqldelight.ResponseItemFromId
 
@@ -54,6 +56,12 @@ class MainViewModel(
     val listOfLikes = candySdk.getLikes()
     fun like(itemId:Long) = candySdk.like(itemId)
 
+    fun admin() = userFlow.map{
+        if(it.isNotEmpty() && it[0].name != null)
+            it[0].name?.contains("admin") ?: false
+        else false
+    }
+
 
     fun login(email: String, password: String) {
         try {
@@ -61,7 +69,7 @@ class MainViewModel(
                 .addOnCompleteListener { result ->
                     viewModelScope.launch {
                         if (result.isSuccessful) {
-                            firebaseAuth.currentUser?.let { candySdk.addUser(it.toString()) }
+                            candySdk.addUser(email)
                         } else errorHandler.emit(result.exception?.localizedMessage ?: "some error")
                     }
                 }
@@ -77,7 +85,7 @@ class MainViewModel(
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 viewModelScope.launch {
                     if (it.isSuccessful) {
-                        firebaseAuth.currentUser?.let { candySdk.addUser(it.toString()) }
+                        candySdk.addUser(email)
                     } else errorHandler.emit(it.exception?.localizedMessage ?: "some error")
                 }
             }
@@ -87,6 +95,9 @@ class MainViewModel(
             }
         }
     }
+
+    fun addToCatalog(item: CatalogItem) = candySdk.addToCatalog(item)
+    fun removeFromCatalog(id: Long) = candySdk.removeFromCatalog(id)
 
 
     class Factory(private val candySdk: CandySDK) : ViewModelProvider.Factory {

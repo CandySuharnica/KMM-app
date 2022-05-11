@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import by.candy.suharnica.android.R
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.entity.CatalogItem
@@ -31,7 +32,8 @@ fun CatalogItem(
     liked: Boolean? = null,
     onClickItem: (() -> Unit)? = null,
     onClickAddItem: (() -> Unit)? = null,
-    onClickLike: (() -> Unit)? = null
+    onClickLike: (() -> Unit)? = null,
+    onRemoveItem: (() -> Unit)? = null
 ) {
     Box(modifier = Modifier
         .drawBehind {
@@ -69,6 +71,10 @@ fun CatalogItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
+            if (onRemoveItem != null)
+                IconButton(onClick = onRemoveItem) {
+                    Icon(painter = painterResource(id = R.drawable.ic_trash), contentDescription = null)
+                }
             Row(modifier = Modifier.padding(start = 10.dp)) {
                 Text(
                     modifier = Modifier
@@ -99,8 +105,9 @@ fun CatalogItem(
                     )
             }
             Text(
-                modifier = Modifier.padding(start = 10.dp).
-                widthIn(max = 135.dp),
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .widthIn(max = 135.dp),
                 text = item.label,
                 fontSize = 16.sp,
                 maxLines = 1,

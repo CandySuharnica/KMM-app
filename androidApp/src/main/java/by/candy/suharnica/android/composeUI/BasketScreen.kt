@@ -16,16 +16,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.RedButton
 import by.candy.suharnica.android.composeUI.items.BasketItem
 import by.candy.suharnica.android.utils.Icons
+import by.candy.suharnica.android.utils.NavGraph
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BasketScreen(viewModel: MainViewModel) {
+fun BasketScreen(viewModel: MainViewModel, navController: NavController) {
     val basketItems = viewModel.getBasket
         .collectAsState(initial = listOf()).value
     val totalPrice = basketItems.sumOf { it.priceSale * it.count }
@@ -92,8 +96,14 @@ fun BasketScreen(viewModel: MainViewModel) {
                 .align(Alignment.BottomCenter),
             text = stringResource(id = MR.strings.place_an_order.resourceId),
             price = totalPrice,
-            weight = totalWeight
-           // onClickButton = viewModel.createCheck
+            weight = totalWeight,
+            onClickButton = {
+                if (basketItems.isEmpty())
+                CoroutineScope(Dispatchers.Default).launch{
+                     viewModel.errorHandler.emit("basket is empty")
+                }
+                else navController.navigate(NavGraph.MakingAnOrderScreen.route)
+            }
         )
     }
 
