@@ -92,7 +92,7 @@ fun BasketScreen(viewModel: MainViewModel) {
                 .align(Alignment.BottomCenter),
             text = stringResource(id = MR.strings.place_an_order.resourceId),
             price = totalPrice,
-            weight = totalWeight,
+            weight = totalWeight
            // onClickButton = viewModel.createCheck
         )
     }

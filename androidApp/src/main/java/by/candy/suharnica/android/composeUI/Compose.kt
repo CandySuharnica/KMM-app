@@ -108,6 +108,7 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
         composable(NavGraph.Basket.route) {
             BasketScreen(viewModel)
             //AdminScreen()
+            //MakingAnOrderScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
             if (user?.name != null) {
