@@ -1,4 +1,8 @@
 package by.candy.suharnica.android.composeUI
 
-class AdminScreen {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun AdminScreen() {
+
 }
