@@ -1,11 +1,7 @@
 package by.candy.suharnica.cache.databases
 
 import by.candy.suharnica.core.dataSource.database.CandyDatabase
-import com.squareup.sqldelight.internal.copyOnWriteList
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrDefault
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import com.squareup.sqldelight.runtime.coroutines.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -22,8 +18,8 @@ class UserDatabase(database: CandyDatabase) {
         dbQuery.addUser(name)
     }
 
-    internal fun getUser(): Flow<User?> {
-        return dbQuery.getUser().asFlow().mapToOneOrNull()
+    internal fun getUser(): Flow<List<User>> {
+        return dbQuery.getUser().asFlow().mapToList()
     }
 
     internal fun removeUser() {
@@ -32,7 +28,7 @@ class UserDatabase(database: CandyDatabase) {
 
     internal fun like(id: Long) {
         CoroutineScope(Dispatchers.Default).launch {
-            val oldListOfLikesFlow = getLikes().first()
+            val oldListOfLikesFlow = getLikes().first().firstNotNullOfOrNull { it }
             if (oldListOfLikesFlow != null) {
                 val oldListOfLikes = oldListOfLikesFlow.likes ?: emptyList()
 
@@ -49,7 +45,7 @@ class UserDatabase(database: CandyDatabase) {
         }
     }
 
-    internal fun getLikes(): Flow<GetLikes?> {
-        return dbQuery.getLikes().asFlow().mapToOneOrNull()
+    internal fun getLikes(): Flow<List<GetLikes>> {
+        return dbQuery.getLikes().asFlow().mapToList()
     }
 }

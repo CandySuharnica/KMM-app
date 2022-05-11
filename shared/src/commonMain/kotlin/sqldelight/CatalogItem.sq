@@ -29,6 +29,10 @@ WHERE id = :id;
 removeAllItems:
 DELETE FROM CatalogItem;
 
+remove:
+DELETE FROM CatalogItem
+WHERE id = :id;
+
 insertItem:
 INSERT OR REPLACE INTO CatalogItem(id,label,type,weight,imgUrl,price,priceSale,likes,about,productComposition,calorie,carbohydrates,fats,protein)
 VALUES (:id,:label,:type,:weight,:imgUrl,:price,:priceSale,:likes,:about,:productComposition,:calorie,:carbohydrates,:fats,:protein);
