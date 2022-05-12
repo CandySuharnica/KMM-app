@@ -22,8 +22,8 @@ class UserDatabase(database: CandyDatabase) {
         return dbQuery.getUser().asFlow().mapToList()
     }
 
-    internal fun removeUser() {
-        dbQuery.removeUser()
+    internal fun removeUser(name: String) {
+        dbQuery.removeUser(name)
     }
 
     internal fun like(id: Long) {

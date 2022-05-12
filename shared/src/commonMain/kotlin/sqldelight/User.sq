@@ -8,7 +8,8 @@ CREATE TABLE User (
 );
 
 removeUser:
-DELETE FROM User;
+DELETE FROM User
+WHERE name = :name;
 
 addUser:
 INSERT INTO User(name)

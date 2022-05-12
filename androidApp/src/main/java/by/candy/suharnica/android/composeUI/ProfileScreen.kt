@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.PopupList
+import by.candy.suharnica.android.composeUI.common.RedButton
 import by.candy.suharnica.android.composeUI.items.CatalogItem
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
@@ -82,6 +83,14 @@ fun Profile(viewModel: MainViewModel) {
             label = stringResource(id = MR.strings.support_profile.resourceId),
             content = {
                 Text(text = stringResource(id = MR.strings.phone_number_example_profile_1.resourceId))
+            }
+        )
+        Spacer(modifier = Modifier.height(250.dp))
+        RedButton(
+            text = "Выйти",
+            onClickButton = {
+                if (user != "")
+                viewModel.removeUser(user)
             }
         )
     }
