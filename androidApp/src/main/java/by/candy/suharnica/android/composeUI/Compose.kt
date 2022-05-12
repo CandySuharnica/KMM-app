@@ -109,7 +109,9 @@ fun Navigation(navController: NavHostController, viewModel: MainViewModel) {
             AdminScreen(viewModel)
         }
         composable(NavGraph.MakingAnOrderScreen.route) {
-            MakingAnOrderScreen(viewModel)
+            if (user?.name != null) {
+                MakingAnOrderScreen(viewModel)
+            } else LogInAndSignUpScreen(viewModel)
         }
         composable(NavGraph.Profile.route) {
             if (user?.name != null) {

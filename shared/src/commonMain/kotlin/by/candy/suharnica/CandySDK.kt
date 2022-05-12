@@ -69,6 +69,7 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
     fun getLikes() = database.userDatabase.getLikes()
     fun like(itemId: Long) = database.userDatabase.like(itemId)
 
+
     fun addToCatalog(item: CatalogItem) {
         CoroutineScope(Dispatchers.Default).launch {
             database.catalogDatabase.fillDB(listOf(item))

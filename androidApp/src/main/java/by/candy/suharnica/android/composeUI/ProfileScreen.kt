@@ -29,6 +29,9 @@ import by.candy.suharnica.android.composeUI.items.CatalogItem
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
 import by.candy.suharnica.cache.databases.OnBasketMode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import sqldelight.GetLikes
 
 
@@ -93,7 +96,9 @@ fun Profile(viewModel: MainViewModel) {
                 viewModel.removeUser(user)
             }
         )
+
     }
+
 }
 
 @Composable

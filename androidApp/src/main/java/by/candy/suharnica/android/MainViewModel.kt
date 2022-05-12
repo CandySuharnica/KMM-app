@@ -49,7 +49,9 @@ class MainViewModel(
     }
 
     val getTypes = candySdk.getTypes()
+
     fun removeUser(name:String) = candySdk.removeUser(name)
+
 
     val userFlow = candySdk.getUser()
 
