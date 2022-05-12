@@ -34,6 +34,7 @@ import com.itextpdf.text.pdf.PdfWriter
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.util.*
+import kotlin.random.Random
 
 @Composable
 fun MakingAnOrderScreen(viewModel: MainViewModel) {
@@ -200,7 +201,7 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                         ) -> {
                             val doc = Document()
-                            val fileName = "check"// + Calendar.getInstance().time.toString().replace("\\s".toRegex(), "")
+                            val fileName = "check" + Random.nextInt(1,100)
                             val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName + ".pdf"
                             try {
                                 PdfWriter.getInstance(doc, FileOutputStream(filePath))

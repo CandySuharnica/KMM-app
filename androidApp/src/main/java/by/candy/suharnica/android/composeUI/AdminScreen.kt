@@ -16,6 +16,9 @@ import androidx.compose.ui.unit.sp
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.utils.Colors
 import by.candy.suharnica.entity.CatalogItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -191,6 +194,10 @@ fun AdminScreen(viewModel: MainViewModel) {
         )
         Button(
             onClick = {
+                if (id.value == "" && label.value == "" && type.value == "" && weight.value == "" && imgURL.value == "" && price.value == "" && priceSale.value == "" && about.value == "") CoroutineScope(
+                    Dispatchers.Default
+                ).launch { viewModel.errorHandler.emit("some fields is empty") }
+                else
                 viewModel.addToCatalog(
                     CatalogItem(
                         id.value.toLong() ?: 0,
