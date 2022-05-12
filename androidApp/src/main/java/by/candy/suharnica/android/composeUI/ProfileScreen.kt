@@ -88,18 +88,15 @@ fun Profile(viewModel: MainViewModel) {
                 Text(text = stringResource(id = MR.strings.phone_number_example_profile_1.resourceId))
             }
         )
-        Box{
-            RedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
-                    .align(Alignment.BottomCenter),
-                text = "Выйти",
-                onClickButton = {
-                    viewModel.removeUser
-                }
-            )
-        }
+        Spacer(modifier = Modifier.height(250.dp))
+        RedButton(
+            text = "Выйти",
+            onClickButton = {
+                if (user != "")
+                viewModel.removeUser(user)
+            }
+        )
+
     }
 
 }

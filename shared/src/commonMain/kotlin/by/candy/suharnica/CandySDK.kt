@@ -64,7 +64,7 @@ class CandySDK(databaseDriverFactory: DatabaseDriverFactory) {
 
     fun getUser() = database.userDatabase.getUser()
 
-    fun removeUser() = database.userDatabase.removeUser()
+    fun removeUser(name:String) = database.userDatabase.removeUser(name)
 
     fun getLikes() = database.userDatabase.getLikes()
     fun like(itemId: Long) = database.userDatabase.like(itemId)
