@@ -49,7 +49,6 @@ class MainViewModel(
     }
 
     val getTypes = candySdk.getTypes()
-    val getUser = candySdk.getUser()
 
 
     val userFlow = candySdk.getUser()
