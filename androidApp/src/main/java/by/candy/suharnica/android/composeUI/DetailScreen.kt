@@ -106,7 +106,7 @@ fun DetailScreen(viewModel: MainViewModel, navController: NavController, itemId:
                             color = Color.Gray
                         )
                     }
-                    Row(
+                    /*Row(
                         modifier = Modifier.align(Alignment.BottomEnd),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -126,8 +126,7 @@ fun DetailScreen(viewModel: MainViewModel, navController: NavController, itemId:
                                 id = Icons.Share.description.resourceId
                             )
                         )
-                    }
-
+                    }*/
                 }
                 Divider(
                     modifier = Modifier.padding(12.dp),

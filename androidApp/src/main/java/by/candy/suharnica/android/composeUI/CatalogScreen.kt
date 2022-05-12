@@ -36,7 +36,7 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
     val finalListTypes = initialList + sortTypes
     val searchFlow = viewModel.searchFlow.collectAsState().value
     val catalogItems = viewModel.catalogList(sortFlow, searchFlow)
-        .collectAsState(initial = listOf()).value
+        .collectAsState(initial = listOf()).value.toMutableList()
     val admin = viewModel.admin().collectAsState(initial = false).value
     val listOfLikes =
         viewModel.listOfLikes.collectAsState(initial = listOf()).value.firstNotNullOfOrNull { it }?.likes
@@ -59,30 +59,33 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                 cells = GridCells.Fixed(2)
             ) {
                 if (admin)
-                items(
-                    items = catalogItems,
-                    itemContent = {
-                        CatalogItem(
-                            item = it,
-                            count = viewModel.getItemCountInBasket(it.id)
-                                .collectAsState(initial = 0).value,
-                            liked = listOfLikes.contains(it.id),
-                            onClickAddItem = {
-                                viewModel.addItemIntoBasket(
-                                    it.id,
-                                    OnBasketMode.ADD
-                                )
-                            },
-                            onClickItem = {
-                                navController.navigate("${NavGraph.DetailScreen.route}/itemId=${it.id}")
-                            },
-                            onClickLike = {
-                                viewModel.like(it.id)
-                            },
-                        onRemoveItem = {viewModel.removeFromCatalog(it.id)}
-                        )
-                    }
-                )
+                    items(
+                        items = catalogItems,
+                        itemContent = {
+                            CatalogItem(
+                                item = it,
+                                count = viewModel.getItemCountInBasket(it.id)
+                                    .collectAsState(initial = 0).value,
+                                liked = listOfLikes.contains(it.id),
+                                onClickAddItem = {
+                                    viewModel.addItemIntoBasket(
+                                        it.id,
+                                        OnBasketMode.ADD
+                                    )
+                                },
+                                onClickItem = {
+                                    navController.navigate("${NavGraph.DetailScreen.route}/itemId=${it.id}")
+                                },
+                                onClickLike = {
+                                    viewModel.like(it.id)
+                                },
+                                onRemoveItem = {
+                                    viewModel.removeFromCatalog(it.id)
+                                    catalogItems.removeIf { item -> item.id == it.id }
+                                }
+                            )
+                        }
+                    )
                 else items(
                     items = catalogItems,
                     itemContent = {
@@ -121,24 +124,27 @@ fun CatalogScreen(viewModel: MainViewModel, navController: NavController) {
                     .align(Alignment.CenterEnd),
                 color = Color.White
             )
-            if(admin)
-            Box(
-                modifier = Modifier
-                    .padding(end = 16.dp, bottom = 80.dp)//Не трогать отступ - это костыль!!!
-                    .align(Alignment.BottomEnd)
-            ) {
-            IconButton(onClick = {
-                      navController.navigate(NavGraph.AdminScreen.route)
-            },
-                modifier = Modifier
-                    .then(Modifier.size(50.dp))
-                    .border(2.dp, Color.Black, shape = CircleShape)
-                    .background(color = Colors.RedButton.color, shape = CircleShape)
-            ) {
-                Icon(painter = painterResource(Icons.Plus.image),
-                    contentDescription = "Plus icon", tint = Color.Black)
-            }
-            }
+            if (admin)
+                Box(
+                    modifier = Modifier
+                        .padding(end = 16.dp, bottom = 80.dp)//Не трогать отступ - это костыль!!!
+                        .align(Alignment.BottomEnd)
+                ) {
+                    IconButton(
+                        onClick = {
+                            navController.navigate(NavGraph.AdminScreen.route)
+                        },
+                        modifier = Modifier
+                            .then(Modifier.size(50.dp))
+                            .border(2.dp, Color.Black, shape = CircleShape)
+                            .background(color = Colors.RedButton.color, shape = CircleShape)
+                    ) {
+                        Icon(
+                            painter = painterResource(Icons.Plus.image),
+                            contentDescription = "Plus icon", tint = Color.Black
+                        )
+                    }
+                }
         }
     }
 }

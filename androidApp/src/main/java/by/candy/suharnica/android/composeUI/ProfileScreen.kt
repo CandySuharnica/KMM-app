@@ -40,6 +40,7 @@ fun Profile(viewModel: MainViewModel) {
     val listOfLikes =
         viewModel.listOfLikes.collectAsState(initial = listOf()).value.firstNotNullOfOrNull { it }?.likes
             ?: emptyList()
+    val user = viewModel.userFlow.collectAsState(initial = listOf()).value.singleOrNull { it.name != null }?.name ?: ""
     for (item in orderItems) {
         orderItemsNames.add(item.label)
     }
@@ -49,7 +50,7 @@ fun Profile(viewModel: MainViewModel) {
             .fillMaxSize()
     ) {
         TopBar()
-        TopCard()
+        TopCard(user)
         Spacer(modifier = Modifier.height(20.dp))
         PopupList(
             label = stringResource(id = MR.strings.my_orders_profile.resourceId),
@@ -112,7 +113,7 @@ fun TopBar() {
 }
 
 @Composable
-fun TopCard() {
+fun TopCard(user:String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,11 +139,11 @@ fun TopCard() {
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(id = MR.strings.full_name_example.resourceId),
+                    text = user,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp
                 )
-                IconButton(
+                /*IconButton(
                     onClick = { },
                     modifier = Modifier
                         .size(31.dp)
@@ -151,7 +152,7 @@ fun TopCard() {
                         painter = painterResource(Icons.Edit.image),
                         contentDescription = "Edit icon"
                     )
-                }
+                }*/
             }
             Text(
                 text = stringResource(id = MR.strings.phone_number_example.resourceId),
