@@ -215,7 +215,9 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                                         "Buyer - ${name.value} ${secondName.value}\n" +
                                         "Seller - Ivan Ivanov\n" +
                                         "Director - Aleksey Trofimovich\n" +
-                                        "In the near future, you will be contacted by the number ${mobileNumber.value}"
+                                        "In the near future, you will be contacted by the number ${mobileNumber.value}\n" +
+                                        "Delivery by courier: $courierStatus\n" +
+                                        "Pick up: $pickUpStatus\n"
                                 doc.addAuthor("admin")
                                 doc.add(Paragraph(data))
                                 doc.close()
