@@ -24,10 +24,14 @@ import androidx.compose.ui.unit.sp
 import by.candy.suharnica.MR
 import by.candy.suharnica.android.MainViewModel
 import by.candy.suharnica.android.composeUI.common.PopupList
+import by.candy.suharnica.android.composeUI.common.RedButton
 import by.candy.suharnica.android.composeUI.items.CatalogItem
 import by.candy.suharnica.android.utils.Icons
 import by.candy.suharnica.android.utils.NavGraph
 import by.candy.suharnica.cache.databases.OnBasketMode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import sqldelight.GetLikes
 
 
@@ -84,7 +88,20 @@ fun Profile(viewModel: MainViewModel) {
                 Text(text = stringResource(id = MR.strings.phone_number_example_profile_1.resourceId))
             }
         )
+        Box{
+            RedButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 12.dp, end = 12.dp, bottom = 70.dp)
+                    .align(Alignment.BottomCenter),
+                text = "Выйти",
+                onClickButton = {
+                    viewModel.removeUser
+                }
+            )
+        }
     }
+
 }
 
 @Composable
