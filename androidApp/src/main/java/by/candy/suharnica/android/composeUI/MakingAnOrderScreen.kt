@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Environment
 import android.util.Log
 import android.util.TimeUtils
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -204,10 +205,20 @@ fun MakingAnOrderScreen(viewModel: MainViewModel) {
                             try {
                                 PdfWriter.getInstance(doc, FileOutputStream(filePath))
                                 doc.open()
-                                val data = "bla bla bla"
+                                var orderData = ""
+                                for(item in basketItems)
+                                    orderData+="${item.priceSale}\n"
+                                val data = "Order payment receipt for the amount $totalPrice\n" +
+                                        "Weight - $totalWeight\n" +
+                                        orderData +
+                                        "Buyer - ${name.value} ${secondName.value}\n" +
+                                        "Seller - Ivan Ivanov\n" +
+                                        "Director - Aleksey Trofimovich\n" +
+                                        "In the near future, you will be contacted by the number ${mobileNumber.value}"
                                 doc.addAuthor("admin")
                                 doc.add(Paragraph(data))
                                 doc.close()
+                                Toast.makeText(context,"Good",Toast.LENGTH_LONG).show()
                                 Log.d("ExampleScreen", "PERMISSION GRANTED")
                             } catch (e: Exception) {
 
